@@ -28,7 +28,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import mainmenucomponenttsdstore.composeapp.generated.resources.Res
 import mainmenucomponenttsdstore.composeapp.generated.resources.add
 import org.example.project.core.menu_bottom_bar.ui.MenuBottomBar
-import org.example.project.presentation.crm_feature.notes_feature.model.Bookmarks
+import org.example.project.presentation.crm_feature.notes_feature.model.Notes
 import org.example.project.presentation.crm_feature.notes_feature.viewmodel.NotesIntents
 import org.example.project.presentation.crm_feature.notes_feature.viewmodel.NotesViewModel
 import org.jetbrains.compose.resources.painterResource
@@ -37,20 +37,21 @@ object NotesScreen:Screen{
     val vm = NotesViewModel()
     @Composable
     override fun Content() {
+        vm.processIntent(NotesIntents.SetNotes )
         Box(modifier = Modifier.fillMaxSize().background(Color.White)) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text("Заметки", color = Color.Black, fontSize = 20.sp)
                // Spacer(modifier = Modifier.height(20.dp))
                 LazyColumn {
-                    if(vm.notesState.listBookmarksData.size != 0) {
-                        itemsIndexed(vm.notesState.listBookmarksData.chunked(2)) { index, items ->
+                    if(vm.notesState.listNotes.size != 0) {
+                        itemsIndexed(vm.notesState.listNotes.chunked(2)) { index, items ->
                             Row(
-                                modifier = Modifier.padding(top = 25.dp).height(130.dp)
+                                modifier = Modifier.padding(top = 10.dp)
                                     .fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 items.forEachIndexed { index, item ->
-                                    Bookmarks.Content(item.title)
+                                    Notes.Content(item.name!!,{vm.processIntent(NotesIntents.EditNote(item))})
                                 }
                                 if (items.size == 1) {
                                     Spacer(modifier = Modifier.weight(1f))
