@@ -54,6 +54,7 @@ object CreateNotesScreen:Screen{
     override fun Content() {
 
         Box(modifier = Modifier.fillMaxSize().background(Color.White)){
+
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)){
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Image(
@@ -61,9 +62,9 @@ object CreateNotesScreen:Screen{
                     modifier = Modifier.size(20.dp).clickable(
                         indication = null, // Отключение эффекта затемнения
                         interactionSource = remember { MutableInteractionSource() })
-                    { vm.processIntent(CreateNotesIntents.Back)}
+                    { vm.processIntent(CreateNotesIntents.Back) }
                 )
-                Text("Редактирование заметки", fontSize = 20.sp, modifier = Modifier.padding(start = 40.dp))
+                Text("Новая заметка", fontSize = 20.sp, modifier = Modifier.padding(start = 40.dp))
             }
             Spacer(modifier = Modifier.height(20.dp))
             OutlinedTextField(

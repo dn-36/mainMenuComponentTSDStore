@@ -1,7 +1,7 @@
 package org.example.project.presentation.crm_feature.notes_feature.viewmodel
 
-import org.example.project.presentation.crm_feature.utils.BookmarksData
+import org.example.project.core.model.NoteResponse
 
 data class NotesState(
-    val listBookmarksData:List<BookmarksData> = listOf()
+    val listNotes:List<NoteResponse> = listOf()
 )
