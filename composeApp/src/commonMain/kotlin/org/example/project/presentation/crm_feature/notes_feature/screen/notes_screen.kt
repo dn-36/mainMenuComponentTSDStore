@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import mainmenucomponenttsdstore.composeapp.generated.resources.Res
 import mainmenucomponenttsdstore.composeapp.generated.resources.add
+import mainmenucomponenttsdstore.composeapp.generated.resources.plus
 import org.example.project.core.menu_bottom_bar.ui.MenuBottomBar
 import org.example.project.presentation.crm_feature.notes_feature.model.Notes
 import org.example.project.presentation.crm_feature.notes_feature.viewmodel.NotesIntents
@@ -63,7 +64,7 @@ object NotesScreen:Screen{
                 }
             }
             Column(horizontalAlignment = Alignment.End, modifier = Modifier.align(Alignment.BottomCenter)) {
-                Image(painter = painterResource(Res.drawable.add), contentDescription = null,
+                Image(painter = painterResource(Res.drawable.plus), contentDescription = null,
                     modifier = Modifier.padding(16.dp).size(70.dp)
                         .clickable(
                             indication = null, // Отключение эффекта затемнения

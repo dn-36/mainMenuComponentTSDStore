@@ -8,5 +8,6 @@ sealed class EditNoteIntents {
     object Back:EditNoteIntents()
     object Cancel:EditNoteIntents()
     object Apply:EditNoteIntents()
+    data class DeleteNote(val note: NoteResponse):EditNoteIntents()
     data class SelectingEditableCategory(val index:Int):EditNoteIntents()
 }

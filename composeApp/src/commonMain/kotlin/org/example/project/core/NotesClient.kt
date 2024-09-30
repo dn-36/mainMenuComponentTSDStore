@@ -16,8 +16,10 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.util.InternalAPI
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import org.example.project.core.model.BodyNoteDto
 import org.example.project.core.model.Note
 import org.example.project.core.model.NoteResponse
+import org.example.project.core.model.User
 
 
 expect val httpClientEngine: HttpClientEngine
@@ -38,14 +40,26 @@ object NotesApi {
             header("Authorization", "Bearer $token")
         }
     }
+    //получение имен всех пользовтелей
+    /*@OptIn(InternalAPI::class)
+    suspend fun getUsers(): List<User> {
 
+
+        val response = client.get("https://delta.online/storage") {
+
+        }
+        println(" ////////////////////++++++++++")
+        println(" ${response.content!!.toString()}")
+        println(" ////////////////////++++++++++")
+        return response.body<List<User>>()
+    }*/
     // Получение списка заметок
     suspend fun getNotes(): List<NoteResponse> {
 
 
         val response = client.get("https://delta.online/api/notes") {
             parameter("active", 1)
-        // для получения принятых пользователем заметок
+            // для получения принятых пользователем заметок
         }
         println(" ////////////////////++++++++++")
         println(" ${response}")
@@ -60,20 +74,13 @@ object NotesApi {
             setBody(note)
         }
     }
-
     // Обновление заметки
-    // Обновление заметки
-    suspend fun updateNote(noteId: String, updatedNote:  BodyNoteDto): HttpResponse {
-      /*  val newNote = BodyNoteDto(name = "Test Note", text = "This is a test.", status = 0, users = listOf(1, 5), local_id = "1")
-        val noteService = NoteServiceImpl(client)
-        val createdNote = noteService.create(ConstData.TOKEN, newNote)
-        val updatedNote = noteService.update(ConstData.TOKEN, createdNote.ui, newNote)*/
+    suspend fun updateNote(noteId: String, updatedNote: BodyNoteDto): HttpResponse {
         println("////////////////////////////////////////")
-       // println("Updating Note at: https://delta.online/api/notes/?id=$noteId")
         return try {
-            val response = client.put("https://delta.online/api/notes/6834") {
+            val response = client.put("https://delta.online/api/notes/$noteId") {
                 contentType(ContentType.Application.Json) // Установка типа контента
-               // name = "Test Note", text = "This is a test.", status = 0, users = listOf(1, 5), local_id = "1")
+                setBody(updatedNote)
             }
             println(" ${response.toString()} ")
             response
@@ -99,10 +106,9 @@ object NotesApi {
     }
 
 
-
 }
 
-interface NoteService {
+/*interface NoteService {
     suspend fun getAllNotes(token: String): List<NoteDto>
     suspend fun create(token: String, dto: BodyNoteDto): NoteDto
     suspend fun update(token: String, uid: String, dto: BodyNoteDto): NoteDto
@@ -148,14 +154,6 @@ class NoteServiceImpl(private val client: HttpClient) : NoteService {
     }
 }
 
-@Serializable
-data class BodyNoteDto(
-    val name: String?,
-    val text: String?,
-    val status: Int?,
-    val users: List<Int>?,
-    val local_id: String?
-)
 
 @kotlinx.serialization.Serializable
 data class NoteDto(
@@ -176,21 +174,8 @@ data class NoteDto(
 data class UserDto(
     val id: Int,
     val name: String
-)
+)*/
 
-
-/*
-
-val client = HttpClient {
-    install(ContentNegotiation) {
-        json() // Используем Kotlinx.serialization для работы с JSON
-    }
-    install(Logging) {
-        logger = Logger.SIMPLE
-        level = LogLevel.BODY
-    }
-}
- */
 
 
 

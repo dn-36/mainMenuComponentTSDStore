@@ -40,22 +40,26 @@ import androidx.compose.ui.unit.sp
 import mainmenucomponenttsdstore.composeapp.generated.resources.Res
 import mainmenucomponenttsdstore.composeapp.generated.resources.down_arrow
 import mainmenucomponenttsdstore.composeapp.generated.resources.user
+import org.example.project.core.model.NoteResponse
 import org.example.project.presentation.crm_feature.edit_note_feature.viewmodel.EditNoteIntents
 import org.example.project.presentation.crm_feature.edit_note_feature.viewmodel.EditNoteViewModel
 import org.jetbrains.compose.resources.painterResource
 
-object WindowUpdate {
-    var vm = EditNoteViewModel()
+data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse) {
 
     @Composable
     fun Status() {
+        println("проверяем значения в state")
+        println("проверяем значения в state")
+        println("${vm.editNoteState.text}")
+        println("проверяем значения в state")
+        println("проверяем значения в state")
         Box(modifier = Modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth()
                     .alpha(0.6f)
-                    //  .clickable { actionCloseSettings() }
                     .background(Color.Black)
             )
                 Box(
@@ -119,9 +123,7 @@ object WindowUpdate {
                                                 interactionSource = remember { MutableInteractionSource() })
                                             {
                                                 vm.editNoteState = vm.editNoteState.copy(
-                                                    text = item
-                                                )
-                                                vm.editNoteState = vm.editNoteState.copy(
+                                                    text = item,
                                                     expandedList = false
                                                 )
                                             })
@@ -131,7 +133,13 @@ object WindowUpdate {
                     }
                         Spacer(modifier = Modifier.height(10.dp))
                         Button(
-                            onClick = {vm.processIntent(EditNoteIntents.Apply)},
+                            onClick = {
+                                println("проверяем знач")
+                                println("проверяем знач")
+                                println("${vm.editNoteState.openWindowUpdate}")
+                                println("проверяем знач")
+                                println("проверяем знач")
+                                vm.processIntent(EditNoteIntents.Apply)},
                             modifier = Modifier
                                 .clip(RoundedCornerShape(70.dp))
                                 .height(40.dp)
@@ -218,9 +226,7 @@ object WindowUpdate {
                                                 interactionSource = remember { MutableInteractionSource() })
                                             {
                                                 vm.editNoteState = vm.editNoteState.copy(
-                                                    text = item
-                                                )
-                                                vm.editNoteState = vm.editNoteState.copy(
+                                                    text = item,
                                                     expandedList = false
                                                 )
                                             })
@@ -278,12 +284,15 @@ object WindowUpdate {
                         modifier = Modifier.fillMaxWidth(0.8f),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text("Удалить", fontSize = 12.sp)
+
+                        Text("Удалить", fontSize = 12.sp, modifier = Modifier.clickable(
+                            indication = null, // Отключение эффекта затемнения
+                            interactionSource = remember { MutableInteractionSource() })
+                        {vm.processIntent(EditNoteIntents.DeleteNote(noteResponse))})
                         Text("Отмена", fontSize = 12.sp, modifier = Modifier.clickable(
                             indication = null, // Отключение эффекта затемнения
                             interactionSource = remember { MutableInteractionSource() })
-                        {vm.processIntent(EditNoteIntents.Cancel)}
-                        )
+                        {vm.processIntent(EditNoteIntents.Cancel)})
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                 }

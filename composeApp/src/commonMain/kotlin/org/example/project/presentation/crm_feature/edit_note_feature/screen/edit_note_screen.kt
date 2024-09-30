@@ -17,17 +17,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.lifecycle.LifecycleEffect
 import cafe.adriel.voyager.core.screen.Screen
 import mainmenucomponenttsdstore.composeapp.generated.resources.Res
 import mainmenucomponenttsdstore.composeapp.generated.resources.back
@@ -67,11 +71,6 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
                         )
                         Text(
                             "редактирование заметки",
-                            fontSize = 20.sp,
-                            modifier = Modifier.padding(start = 10.dp)
-                        )
-                        Text(
-                            "${vm.editNoteState.users[0]}",
                             fontSize = 20.sp,
                             modifier = Modifier.padding(start = 10.dp)
                         )
@@ -165,15 +164,28 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
                     }
                 }
 
-            if(vm.editNoteState.openWindowUpdate){
-                when(vm.editNoteState.categoryNow){
-                    0 -> {WindowUpdate.Status() }
-                    1 -> {WindowUpdate.Users() }
-                    2 -> {WindowUpdate.Delete() }
-                }
-            }
-            else{}
+                if (vm.editNoteState.openWindowUpdate.value) {
+                    println("проверка видимости")
+                    println("проверка видимости")
+                    println("проверка видимости")
+                    println("${vm.editNoteState.openWindowUpdate},${vm.editNoteState.text}")
+                    println("проверка видимости")
+                    println("проверка видимости")
+                    println("проверка видимости")
+                    when (vm.editNoteState.categoryNow) {
+                        0 -> {
+                           WindowUpdate(vm,noteResponse).Status()
+                        }
 
+                        1 -> {
+                            WindowUpdate(vm,noteResponse).Users()
+                        }
+
+                        2 -> {
+                            WindowUpdate(vm,noteResponse).Delete()
+                        }
+                    }
+                }
             }
         }
     }

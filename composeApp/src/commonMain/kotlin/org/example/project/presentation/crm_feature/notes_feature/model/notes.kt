@@ -32,7 +32,7 @@ object Notes{
             .height(80.dp).width(170.dp).shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp)),
             backgroundColor = Color.White,
             shape = RoundedCornerShape(8.dp)) {}
-        Text(title, fontSize = 15.sp, modifier = Modifier.padding(10.dp).fillMaxWidth(0.9f))
+        Text(title, fontSize = 15.sp, modifier = Modifier.padding(8.dp).fillMaxWidth(0.9f))
     }
     }
 }

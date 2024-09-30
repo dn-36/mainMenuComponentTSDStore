@@ -41,6 +41,7 @@ import mainmenucomponenttsdstore.composeapp.generated.resources.crm
 import mainmenucomponenttsdstore.composeapp.generated.resources.home
 import mainmenucomponenttsdstore.composeapp.generated.resources.menu
 import mainmenucomponenttsdstore.composeapp.generated.resources.messenger
+import mainmenucomponenttsdstore.composeapp.generated.resources.squares_stack
 import mainmenucomponenttsdstore.composeapp.generated.resources.user
 import org.example.project.core.menu_bottom_bar.viewmodel.MenuBottomBarIntents
 import org.example.project.core.menu_bottom_bar.viewmodel.MenuBottomBarViewModel
@@ -73,7 +74,7 @@ val vm = MenuBottomBarViewModel()
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Box(modifier = Modifier.clip(RoundedCornerShape(50.dp)).background(color = vm.menuBottomBarState.colorListBottomMenu[1])
                             .width(70.dp).height(40.dp).clickable { vm.processIntent(MenuBottomBarIntents.CRM)}){
-                            Image(painter = painterResource(Res.drawable.crm),contentDescription = null,
+                            Image(painter = painterResource(Res.drawable.squares_stack),contentDescription = null,
                                 modifier =  Modifier.size(30.dp).align(Alignment.Center))
                         }
                         Text("CRM", color = Color.Black, fontSize = 12.sp)
