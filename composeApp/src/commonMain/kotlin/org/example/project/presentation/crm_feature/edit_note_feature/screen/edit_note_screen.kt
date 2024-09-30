@@ -2,6 +2,7 @@ package org.example.project.presentation.crm_feature.edit_note_feature.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -13,18 +14,30 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Button
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Slider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -36,6 +49,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import mainmenucomponenttsdstore.composeapp.generated.resources.Res
 import mainmenucomponenttsdstore.composeapp.generated.resources.back
 import mainmenucomponenttsdstore.composeapp.generated.resources.dots
+import mainmenucomponenttsdstore.composeapp.generated.resources.down_arrow
 import org.example.project.core.model.NoteResponse
 import org.example.project.presentation.crm_feature.edit_note_feature.model.WindowUpdate
 import org.example.project.presentation.crm_feature.edit_note_feature.viewmodel.EditNoteIntents
@@ -66,7 +80,7 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
                                         vm.editNoteState.noteText
                                     )
                                 )
-                                vm.processIntent(EditNoteIntents.Back)
+                               // vm.processIntent(EditNoteIntents.Back)
                             }
                         )
                         Text(
@@ -164,7 +178,7 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
                     }
                 }
 
-                if (vm.editNoteState.openWindowUpdate.value) {
+                if (vm.editNoteState.openWindowUpdate) {
                     println("проверка видимости")
                     println("проверка видимости")
                     println("проверка видимости")

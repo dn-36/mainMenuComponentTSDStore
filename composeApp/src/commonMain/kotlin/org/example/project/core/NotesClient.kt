@@ -41,18 +41,17 @@ object NotesApi {
         }
     }
     //получение имен всех пользовтелей
-    /*@OptIn(InternalAPI::class)
     suspend fun getUsers(): List<User> {
 
 
-        val response = client.get("https://delta.online/storage") {
+        val response = client.get("https://delta.online/api/users-company") {
 
         }
         println(" ////////////////////++++++++++")
-        println(" ${response.content!!.toString()}")
+        println(" ${response}")
         println(" ////////////////////++++++++++")
         return response.body<List<User>>()
-    }*/
+    }
     // Получение списка заметок
     suspend fun getNotes(): List<NoteResponse> {
 

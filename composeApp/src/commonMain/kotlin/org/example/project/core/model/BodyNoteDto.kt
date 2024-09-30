@@ -7,6 +7,6 @@ data class BodyNoteDto(
     val name: String?,
     val text: String?,
     val status: Int?,
-    val users: List<Int>?,
+    val users: List<Int?>?,
     val local_id: String?
 )

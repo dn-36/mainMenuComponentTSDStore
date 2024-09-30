@@ -2,11 +2,7 @@ package org.example.project
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
-import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.statement.readText
 import org.example.project.core.Navigation
-import org.example.project.core.NotesApi
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable

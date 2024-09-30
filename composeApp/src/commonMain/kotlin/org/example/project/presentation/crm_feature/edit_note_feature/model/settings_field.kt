@@ -41,19 +41,16 @@ import mainmenucomponenttsdstore.composeapp.generated.resources.Res
 import mainmenucomponenttsdstore.composeapp.generated.resources.down_arrow
 import mainmenucomponenttsdstore.composeapp.generated.resources.user
 import org.example.project.core.model.NoteResponse
+import org.example.project.core.model.User
 import org.example.project.presentation.crm_feature.edit_note_feature.viewmodel.EditNoteIntents
 import org.example.project.presentation.crm_feature.edit_note_feature.viewmodel.EditNoteViewModel
 import org.jetbrains.compose.resources.painterResource
 
 data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse) {
-
+    var selectedUsers = vm.editNoteState.updatedUser
     @Composable
     fun Status() {
-        println("проверяем значения в state")
-        println("проверяем значения в state")
-        println("${vm.editNoteState.text}")
-        println("проверяем значения в state")
-        println("проверяем значения в state")
+
         Box(modifier = Modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier
@@ -139,7 +136,7 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                                 println("${vm.editNoteState.openWindowUpdate}")
                                 println("проверяем знач")
                                 println("проверяем знач")
-                                vm.processIntent(EditNoteIntents.Apply)},
+                                vm.processIntent(EditNoteIntents.Apply(noteResponse))},
                             modifier = Modifier
                                 .clip(RoundedCornerShape(70.dp))
                                 .height(40.dp)
@@ -218,27 +215,34 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                             ) {}
                             LazyColumn {
                                 itemsIndexed(vm.editNoteState.users) { index, item ->
-                                    Text(item!!,
+                                    Text(item.name!!,
                                         fontSize = 15.sp,
                                         modifier = Modifier.fillMaxWidth(0.9f).padding(16.dp)
                                             .clickable(
                                                 indication = null, // Отключение эффекта затемнения
                                                 interactionSource = remember { MutableInteractionSource() })
                                             {
+                                                selectedUsers.add(item)
+
                                                 vm.editNoteState = vm.editNoteState.copy(
-                                                    text = item,
-                                                    expandedList = false
+                                                    text =  "${vm.editNoteState.text + item.name},",
+                                                    expandedList = false,
+                                                    updatedUser = selectedUsers
                                                 )
                                             })
                                 }
                             }
                         }
-                        println("Список пользователей в editNoteState:")
-                        vm.editNoteState.users.forEach { println(it) }
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                     Button(
-                        onClick = { vm.processIntent(EditNoteIntents.Apply) },
+                        onClick = { println("333")
+                            println("333")
+                            println("${vm.editNoteState.updatedUser }")
+                            println("333")
+                            println("333")
+
+                            vm.processIntent(EditNoteIntents.Apply(noteResponse))},
                         modifier = Modifier
                             .clip(RoundedCornerShape(70.dp))
                             .height(40.dp)
