@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +18,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import mainmenucomponenttsdstore.composeapp.generated.resources.Res
-import mainmenucomponenttsdstore.composeapp.generated.resources.add
 import mainmenucomponenttsdstore.composeapp.generated.resources.plus
 import org.example.project.core.menu_bottom_bar.ui.MenuBottomBar
 import org.example.project.presentation.crm_feature.notes_feature.model.Notes
@@ -38,7 +37,10 @@ object NotesScreen:Screen{
     val vm = NotesViewModel()
     @Composable
     override fun Content() {
-        vm.processIntent(NotesIntents.SetNotes )
+
+        val scope = rememberCoroutineScope()
+
+        vm.processIntent(NotesIntents.SetNotes(scope) )
         Box(modifier = Modifier.fillMaxSize().background(Color.White)) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text("Заметки", color = Color.Black, fontSize = 20.sp)

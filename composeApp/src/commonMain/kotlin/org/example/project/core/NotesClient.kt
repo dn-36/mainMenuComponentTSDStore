@@ -68,9 +68,17 @@ object NotesApi {
 
     // Добавление новой заметки
     suspend fun createNote(note: Note): HttpResponse {
-        return client.post("https://delta.online/api/notes") {
-            contentType(ContentType.Application.Json)  // Установка типа контента
-            setBody(note)
+        return try {
+            val response = client.post("https://delta.online/api/notes") {
+                contentType(ContentType.Application.Json)  // Установка типа контента
+                setBody(note)
+            }
+            println(" ${response.toString()} ")
+            response
+        }
+        catch (e: Exception){
+            println("CREATE Note: Error - ${e.message}")
+            throw e
         }
     }
     // Обновление заметки

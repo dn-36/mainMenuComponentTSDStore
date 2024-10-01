@@ -1,7 +1,11 @@
 package org.example.project.presentation.crm_feature.create_notes_feature.viewmodel
 
+import kotlinx.coroutines.CoroutineScope
+
 sealed class CreateNotesIntents {
     object Cancel: CreateNotesIntents()
     object Back: CreateNotesIntents()
-    object Next: CreateNotesIntents()//(val title:String,val description:String,val status:String,val users:List<String>):CreateNotesIntents()
+
+    data class GetAllUsersList(val coroutineScope: CoroutineScope):CreateNotesIntents()
+    data class Next(val coroutineScope: CoroutineScope):CreateNotesIntents()
 }

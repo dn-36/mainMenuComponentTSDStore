@@ -1,6 +1,5 @@
 package org.example.project.presentation.crm_feature.edit_note_feature.model
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -16,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,10 +23,10 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Slider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -39,17 +37,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mainmenucomponenttsdstore.composeapp.generated.resources.Res
 import mainmenucomponenttsdstore.composeapp.generated.resources.down_arrow
-import mainmenucomponenttsdstore.composeapp.generated.resources.user
 import org.example.project.core.model.NoteResponse
-import org.example.project.core.model.User
 import org.example.project.presentation.crm_feature.edit_note_feature.viewmodel.EditNoteIntents
 import org.example.project.presentation.crm_feature.edit_note_feature.viewmodel.EditNoteViewModel
 import org.jetbrains.compose.resources.painterResource
 
 data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse) {
+
     var selectedUsers = vm.editNoteState.updatedUser
+
     @Composable
     fun Status() {
+
+        val scope = rememberCoroutineScope()
 
         Box(modifier = Modifier.fillMaxSize()) {
             Box(
@@ -133,10 +133,10 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                             onClick = {
                                 println("проверяем знач")
                                 println("проверяем знач")
-                                println("${vm.editNoteState.openWindowUpdate}")
+                                println("${vm.editNoteState.text}")
                                 println("проверяем знач")
                                 println("проверяем знач")
-                                vm.processIntent(EditNoteIntents.Apply(noteResponse))},
+                                vm.processIntent(EditNoteIntents.ApplyStatus(noteResponse,scope))},
                             modifier = Modifier
                                 .clip(RoundedCornerShape(70.dp))
                                 .height(40.dp)
@@ -151,7 +151,91 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
         }
     }
     @Composable
+    fun Name() {
+
+        val scope = rememberCoroutineScope()
+
+        Box(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+                    .alpha(0.6f)
+                    .background(Color.Black)
+            )
+            Box(
+                modifier = Modifier.clip(RoundedCornerShape(20.dp))
+                    .fillMaxWidth(0.85f).background(Color.White)
+                    .align(Alignment.Center)
+            ) {
+                Spacer(modifier = Modifier.height(10.dp))
+                Column(
+                    modifier = Modifier.align(Alignment.Center),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    OutlinedTextField(
+                        value = vm.editNoteState.title!!,
+                        onValueChange = {
+                            vm.editNoteState = vm.editNoteState.copy(
+                                title = it
+                            )
+                        },
+                        label = { Text("Название") },
+                        trailingIcon = {
+                            IconButton(
+                                onClick = {
+                                    vm.editNoteState = vm.editNoteState.copy(
+                                        expandedList = !vm.editNoteState.expandedList
+                                    )
+                                }
+                            ) {
+                                Icon(
+                                    painter = painterResource(Res.drawable.down_arrow),
+                                    contentDescription = "Поиск",
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth(0.8f)
+                            .heightIn(min = 40.dp)
+                            .clickable(
+                                indication = null, // Отключение эффекта затемнения
+                                interactionSource = remember { MutableInteractionSource() })
+                            { }// Стандартная высота TextField
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Button(
+                        onClick = {
+                            println("проверяем знач")
+                            println("проверяем знач")
+                            println("${vm.editNoteState.text}")
+                            println("проверяем знач")
+                            println("проверяем знач")
+                            vm.processIntent(EditNoteIntents.ApplyStatus(noteResponse,scope))},
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(70.dp))
+                            .height(40.dp)
+                            .fillMaxWidth(0.8f)
+                    ) {
+                        Text(text = "Применить")
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
+
+            }
+        }
+    }
+   /* @Composable
     fun Users() {
+
+        val scope = rememberCoroutineScope()
+
+        println("users")
+        println("users")
+        println("${vm.editNoteState.text!!}")
+        println("users")
+        println("users")
 
         Box(modifier = Modifier.fillMaxSize()) {
             Box(
@@ -214,7 +298,7 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                                 shape = RoundedCornerShape(8.dp)
                             ) {}
                             LazyColumn {
-                                itemsIndexed(vm.editNoteState.users) { index, item ->
+                                itemsIndexed(vm.editNoteState.listAllUsers) { index, item ->
                                     Text(item.name!!,
                                         fontSize = 15.sp,
                                         modifier = Modifier.fillMaxWidth(0.9f).padding(16.dp)
@@ -234,15 +318,16 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                             }
                         }
                     }
+                    println("333")
+                    println("333")
+                    println("${selectedUsers }")
+                    println("333")
+                    println("333")
                     Spacer(modifier = Modifier.height(10.dp))
                     Button(
-                        onClick = { println("333")
-                            println("333")
-                            println("${vm.editNoteState.updatedUser }")
-                            println("333")
-                            println("333")
+                        onClick = {
 
-                            vm.processIntent(EditNoteIntents.Apply(noteResponse))},
+                            vm.processIntent(EditNoteIntents.Apply(noteResponse,scope))},
                         modifier = Modifier
                             .clip(RoundedCornerShape(70.dp))
                             .height(40.dp)
@@ -258,9 +343,12 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
 
             }
         }
-    }
+    }*/
     @Composable
     fun Delete() {
+
+        val scope = rememberCoroutineScope()
+
         Box(modifier = Modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier
@@ -292,7 +380,7 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                         Text("Удалить", fontSize = 12.sp, modifier = Modifier.clickable(
                             indication = null, // Отключение эффекта затемнения
                             interactionSource = remember { MutableInteractionSource() })
-                        {vm.processIntent(EditNoteIntents.DeleteNote(noteResponse))})
+                        {vm.processIntent(EditNoteIntents.DeleteNote(noteResponse,scope))})
                         Text("Отмена", fontSize = 12.sp, modifier = Modifier.clickable(
                             indication = null, // Отключение эффекта затемнения
                             interactionSource = remember { MutableInteractionSource() })

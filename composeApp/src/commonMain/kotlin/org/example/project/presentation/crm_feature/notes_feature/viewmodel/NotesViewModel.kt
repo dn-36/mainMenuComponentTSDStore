@@ -20,7 +20,7 @@ class NotesViewModel:ViewModel() {
     fun processIntent(intents: NotesIntents){
         when(intents){
             is NotesIntents.CreateBookmarks -> {createNotesIntent()}
-            is NotesIntents.SetNotes -> {setNotesIntent()}
+            is NotesIntents.SetNotes -> {setNotesIntent(intents.coroutineScope)}
             is NotesIntents.EditNote -> {editNote(intents.note)}
         }
     }
@@ -30,11 +30,11 @@ class NotesViewModel:ViewModel() {
     fun editNote(note: NoteResponse){
         Navigation.navigator.push(EditNoteScreen(note))
     }
-    fun setNotesIntent(){
+    fun setNotesIntent(coroutineScope: CoroutineScope){
         val token = ConstData.TOKEN
         NotesApi.token = token
         val notesApi = NotesApi
-        CoroutineScope(Dispatchers.IO).launch {
+        coroutineScope.launch(Dispatchers.IO) {
             val notesResponse = notesApi.getNotes()
             notesState = notesState.copy(
                 listNotes =notesResponse
