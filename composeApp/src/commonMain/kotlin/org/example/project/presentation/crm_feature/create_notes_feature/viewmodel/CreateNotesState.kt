@@ -12,6 +12,7 @@ data class CreateNotesState(
     val listAllUsers:List<User> = listOf(),
     val expandedUsers:Boolean = false,
     val expandedStatus:Boolean = false,
-    val usersNoteCreated:MutableList<Int> = mutableListOf<Int>(),
+    val filteredUsers: List<User> = emptyList(),
+    val usersNoteCreated:MutableList<User> = mutableListOf<User>(),
     val isUsed: MutableState<Boolean> = mutableStateOf(true)
 )

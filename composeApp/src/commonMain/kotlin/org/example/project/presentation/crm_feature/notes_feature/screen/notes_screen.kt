@@ -29,6 +29,7 @@ import mainmenucomponenttsdstore.composeapp.generated.resources.Res
 import mainmenucomponenttsdstore.composeapp.generated.resources.plus
 import org.example.project.core.menu_bottom_bar.ui.MenuBottomBar
 import org.example.project.presentation.crm_feature.notes_feature.model.Notes
+import org.example.project.presentation.crm_feature.notes_feature.util.formatDateTime
 import org.example.project.presentation.crm_feature.notes_feature.viewmodel.NotesIntents
 import org.example.project.presentation.crm_feature.notes_feature.viewmodel.NotesViewModel
 import org.jetbrains.compose.resources.painterResource
@@ -54,7 +55,8 @@ object NotesScreen:Screen{
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 items.forEachIndexed { index, item ->
-                                    Notes.Content(item.name!!,{vm.processIntent(NotesIntents.EditNote(item))})
+                                    Notes.Content(item.name!!,{vm.processIntent(NotesIntents.EditNote(item))},
+                                        formatDateTime( item.updatedAt!!))
                                 }
                                 if (items.size == 1) {
                                     Spacer(modifier = Modifier.weight(1f))

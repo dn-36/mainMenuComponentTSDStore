@@ -8,13 +8,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-import org.example.project.core.ConstData
-import org.example.project.core.Navigation
+import org.example.project.core.data.ConstData
+import org.example.project.core.navigation.Navigation
 import org.example.project.core.model.Note
 import org.example.project.core.model.NoteResponse
-import org.example.project.core.NotesApi
 import org.example.project.core.model.BodyNoteDto
 import org.example.project.core.model.User
+import org.example.project.core.model.removeHtmlTags
+import org.example.project.core.notes_network.NotesApi
+import org.example.project.core.users_network.UsersApi
+import org.example.project.presentation.crm_feature.edit_note_feature.screen.EditNoteScreen
 import org.example.project.presentation.crm_feature.notes_feature.screen.NotesScreen
 
 class EditNoteViewModel : ViewModel() {
@@ -28,7 +31,7 @@ class EditNoteViewModel : ViewModel() {
             }
 
             is EditNoteIntents.UpdateNoteBack -> {
-                updateNoteBack(intent.note, intent.text,intent.coroutineScope)
+                updateNoteBack(intent.note, intent.coroutineScope)
             }
 
             is EditNoteIntents.ApplyNameUpdate -> {
@@ -99,17 +102,18 @@ class EditNoteViewModel : ViewModel() {
 
             "Скрыта" -> {status = 0}
 
+            else -> { status = 1 }
+
         }
 
         val updatedNote = BodyNoteDto(
-            name = note.name,
+            name = editNoteState.titleTF,
             text = editNoteState.noteText,
             status = status,
             users = idUsers.toList(),
             local_id = "null")
 
         editNoteState = editNoteState.copy(
-            openWindowUpdate = false,
             status = status
         )
 
@@ -121,59 +125,40 @@ class EditNoteViewModel : ViewModel() {
         println("2")
 
         coroutineScope.launch(Dispatchers.IO) {
+
             notesApi.updateNote(noteId = "${note.ui}", updatedNote = updatedNote)
+
+            if(editNoteState.status == 1) {
+
+                val notesResponse = notesApi.getNotes()
+
+                // Проходим по каждому элементу списка и очищаем поле text от HTML-тегов
+                val cleanedNotesResponse = notesResponse.map { note ->
+                    note.copy(text = note.text?.let { removeHtmlTags(it) })  // Удаляем HTML-теги из текста
+                }
+
+
+                val notes = cleanedNotesResponse.find { item ->
+                    item.ui == note.ui
+                }
+
+                Navigation.navigator.push(EditNoteScreen(notes!!))
+
+                editNoteState = editNoteState.copy(
+                    openWindowUpdate = false,
+                    isUsed = mutableStateOf(true)
+                )
+            }
+            else {
+
+                Navigation.navigator.push(NotesScreen)
+
+            }
         }
     }
 
     fun applyNameUpdate(note: NoteResponse, coroutineScope: CoroutineScope) {
 
-        editNoteState = editNoteState.copy(
-            openWindowUpdate = false
-        )
-        val token = ConstData.TOKEN
-
-        val notesApi = NotesApi
-        NotesApi.token = token
-
-        val idUsers = mutableListOf<Int?>()
-
-        note.users.forEach { it ->
-            println("${it.name}")
-            idUsers.add(it.id)
-        }
-
-        /*editNoteState.updatedUser.forEach { it ->
-            println("${it.name}")
-            idUsers.add(it.id)
-        }*/
-
-        println("${idUsers}")
-
-        val updatedNote = BodyNoteDto(
-            name = editNoteState.titleTF,
-            text = editNoteState.noteText,
-            status = note.status,
-            users = idUsers.toList(),
-            local_id = "null"
-        )
-
-        println("2")
-        println("2")
-        println("2")
-        println("${idUsers}")
-        println("2")
-        println("2")
-
-        coroutineScope.launch(Dispatchers.IO) {
-            notesApi.updateNote(noteId = "${note.ui}", updatedNote = updatedNote)
-        }
-    }
-
-    fun applyUsersUpdate(note: NoteResponse, coroutineScope: CoroutineScope) {
-
-        editNoteState = editNoteState.copy(
-            openWindowUpdate = false
-        )
         val token = ConstData.TOKEN
 
         val notesApi = NotesApi
@@ -182,8 +167,11 @@ class EditNoteViewModel : ViewModel() {
         val idUsers = mutableListOf<Int?>()
 
         editNoteState.updatedUser.forEach { it ->
+
             println("${it.name}")
+
             idUsers.add(it.id)
+
         }
 
         println("${idUsers}")
@@ -191,7 +179,7 @@ class EditNoteViewModel : ViewModel() {
         val updatedNote = BodyNoteDto(
             name = editNoteState.titleTF,
             text = editNoteState.noteText,
-            status = note.status,
+            status = editNoteState.status,
             users = idUsers.toList(),
             local_id = "null"
         )
@@ -204,7 +192,88 @@ class EditNoteViewModel : ViewModel() {
         println("2")
 
         coroutineScope.launch(Dispatchers.IO) {
+
             notesApi.updateNote(noteId = "${note.ui}", updatedNote = updatedNote)
+
+            val notesResponse = notesApi.getNotes()
+
+            // Проходим по каждому элементу списка и очищаем поле text от HTML-тегов
+            val cleanedNotesResponse = notesResponse.map { note ->
+                note.copy(text = note.text?.let { removeHtmlTags(it) })  // Удаляем HTML-теги из текста
+            }
+
+
+            val notes = cleanedNotesResponse.find { item ->
+                item.ui == note.ui
+            }
+
+            Navigation.navigator.push(EditNoteScreen(notes!!))
+
+            editNoteState = editNoteState.copy(
+                openWindowUpdate = false,
+                isUsed = mutableStateOf(true)
+            )
+        }
+    }
+
+    fun applyUsersUpdate(note: NoteResponse, coroutineScope: CoroutineScope) {
+
+        val token = ConstData.TOKEN
+
+        val notesApi = NotesApi
+
+        NotesApi.token = token
+
+            val idUsers = mutableListOf<Int?>()
+
+        editNoteState.updatedUser.forEach { it ->
+
+            println("${it.name}")
+
+            idUsers.add(it.id)
+
+        }
+
+        println("${idUsers}")
+
+        val updatedNote = BodyNoteDto(
+            name = editNoteState.titleTF,
+            text = editNoteState.noteText,
+            status = editNoteState.status,
+            users = idUsers,
+            local_id = "null"
+        )
+
+        println("2")
+        println("2")
+        println("2")
+        println("${idUsers}")
+        println("2")
+        println("2")
+
+        coroutineScope.launch(Dispatchers.IO) {
+
+        notesApi.updateNote(noteId = "${note.ui}", updatedNote = updatedNote)
+
+            val notesResponse = notesApi.getNotes()
+
+            // Проходим по каждому элементу списка и очищаем поле text от HTML-тегов
+            val cleanedNotesResponse = notesResponse.map { note ->
+                note.copy(text = note.text?.let { removeHtmlTags(it) })  // Удаляем HTML-теги из текста
+            }
+
+
+            val notes = cleanedNotesResponse.find { item ->
+                item.ui == note.ui
+            }
+
+            Navigation.navigator.push(EditNoteScreen(notes!!))
+
+            editNoteState = editNoteState.copy(
+                openWindowUpdate = false,
+                isUsed = mutableStateOf(true)
+            )
+
         }
     }
 
@@ -225,8 +294,6 @@ class EditNoteViewModel : ViewModel() {
 
             editNoteState.isUsed.value = false
 
-            coroutineScope.launch(Dispatchers.IO) {
-
             val idUsers = mutableListOf<Int?>()
 
             val updatedUsers = mutableListOf<User>()
@@ -234,6 +301,9 @@ class EditNoteViewModel : ViewModel() {
                 val token = ConstData.TOKEN
 
                 val notesApi = NotesApi
+
+            val usersApi = UsersApi
+
                 NotesApi.token = token
 
             note.users.forEach { it ->
@@ -243,7 +313,9 @@ class EditNoteViewModel : ViewModel() {
 
             val allUsers = mutableListOf<User>()
 
-                notesApi.getUsers().forEach {
+            coroutineScope.launch(Dispatchers.IO) {
+
+                usersApi.getUsers().forEach {
                     allUsers.add(it)
                 }
 
@@ -258,21 +330,13 @@ class EditNoteViewModel : ViewModel() {
             }
 
             note.users.forEach { it ->
+
                 println("${it.name}")
-                //users.add(it)
+
                 userText.value = "${userText.value + it.name},"
             }
 
             println("${userText.value}")
-
-                /*val text = when (editNoteState.categoryNow) {
-                    0 -> status
-                    1 -> note.name
-                   // 1 -> userText.value
-                    else -> {
-                        ""
-                    }
-                }*/
 
             editNoteState = editNoteState.copy(
                 note = Note(
@@ -304,7 +368,7 @@ class EditNoteViewModel : ViewModel() {
             }
     }
 
-    fun updateNoteBack(note: NoteResponse, text: String?, coroutineScope: CoroutineScope) {
+    fun updateNoteBack(note: NoteResponse, coroutineScope: CoroutineScope) {
 
 
         val idUsers = mutableListOf<Int?>()
@@ -322,7 +386,7 @@ class EditNoteViewModel : ViewModel() {
 
         val updatedNote = BodyNoteDto(
             name = editNoteState.titleTF,
-            text = text,
+            text = editNoteState.noteText,
             status = editNoteState.status,
             users = idUsers,
             local_id = "null"

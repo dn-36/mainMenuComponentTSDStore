@@ -61,9 +61,7 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
                             {
                                 vm.processIntent(
                                     EditNoteIntents.UpdateNoteBack(
-                                        noteResponse,
-                                        vm.editNoteState.noteText,
-                                    scope)
+                                        noteResponse, scope)
                                 )
                                // vm.processIntent(EditNoteIntents.Back)
                             }

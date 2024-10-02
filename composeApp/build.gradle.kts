@@ -56,6 +56,9 @@ kotlin {
             implementation(libs.bundles.ktor)
             implementation(libs.multiplatform.settings)
             api(libs.koin.core)
+
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+
         }
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)

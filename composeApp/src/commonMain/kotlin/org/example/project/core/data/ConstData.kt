@@ -1,4 +1,4 @@
-package org.example.project.core
+package org.example.project.core.data
 
 object ConstData {
     const val TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMz" +

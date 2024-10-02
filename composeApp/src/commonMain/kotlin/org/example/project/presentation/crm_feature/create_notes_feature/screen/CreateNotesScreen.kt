@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -33,22 +34,25 @@ import mainmenucomponenttsdstore.composeapp.generated.resources.Res
 import mainmenucomponenttsdstore.composeapp.generated.resources.back
 import org.jetbrains.compose.resources.painterResource
 import androidx.compose.material.Text
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.sp
+import mainmenucomponenttsdstore.composeapp.generated.resources.cancel
 import mainmenucomponenttsdstore.composeapp.generated.resources.down_arrow
 import org.example.project.core.model.User
 import org.example.project.presentation.crm_feature.create_notes_feature.viewmodel.CreateNotesIntents
 import org.example.project.presentation.crm_feature.create_notes_feature.viewmodel.CreateNotesViewModel
+import org.example.project.presentation.crm_feature.edit_note_feature.viewmodel.EditNoteIntents
 
 
 object CreateNotesScreen : Screen {
     val vm = CreateNotesViewModel()
 
-    val usersNoteCreated = mutableListOf<Int>()
+    var usersNoteCreated = mutableStateListOf<User>()
 
     @Composable
     override fun Content() {
@@ -151,9 +155,12 @@ object CreateNotesScreen : Screen {
                 Spacer(modifier = Modifier.height(10.dp))
                 OutlinedTextField(
                     value = vm.createNotesState.users,
-                    onValueChange = {
+                    onValueChange = {inputText ->
                         vm.createNotesState = vm.createNotesState.copy(
-                            users = it
+                            users = inputText,
+                            filteredUsers = vm.createNotesState.listAllUsers.filter {
+                                it.name!!.contains(inputText, ignoreCase = true)
+                            }
                         )
                     },
                     label = { Text("Пользователи") },
@@ -189,7 +196,7 @@ object CreateNotesScreen : Screen {
                             shape = RoundedCornerShape(8.dp)
                         ) {}
                         LazyColumn {
-                            itemsIndexed(vm.createNotesState.listAllUsers) { index, item ->
+                            itemsIndexed(vm.createNotesState.filteredUsers) { index, item ->
                                 Text(item.name!!,
                                     fontSize = 20.sp,
                                     modifier = Modifier.fillMaxWidth(0.9f).padding(16.dp)
@@ -198,13 +205,11 @@ object CreateNotesScreen : Screen {
                                             interactionSource = remember { MutableInteractionSource() })
 
                                         {
-                                            usersNoteCreated.add(item.id!!)
+                                            usersNoteCreated.add(item)
 
                                             println("${usersNoteCreated}")
 
                                             vm.createNotesState = vm.createNotesState.copy(
-
-                                                users = "${vm.createNotesState.users + item.name},",
 
                                                 expandedUsers = false,
 
@@ -217,6 +222,22 @@ object CreateNotesScreen : Screen {
                         }
                     }
 
+                }
+                Spacer(modifier = Modifier.height(5.dp))
+                LazyColumn (modifier = Modifier.fillMaxWidth()) {
+                    items(usersNoteCreated){ item ->
+                        Box(modifier = Modifier.padding(vertical = 5.dp).clip(RoundedCornerShape(10.dp))
+                            .height(40.dp).fillMaxWidth().background(Color(0xFFA6D172))){
+                            Text(text = item.name!!,color = Color.White, fontSize = 15.sp, modifier = Modifier.padding(8.dp).align(
+                                Alignment.CenterStart))
+                            Image(painter = painterResource(Res.drawable.cancel),contentDescription = null,
+                                modifier = Modifier.padding(8.dp).size(10.dp).align(Alignment.TopEnd).clickable(
+                                    indication = null, // Отключение эффекта затемнения
+                                    interactionSource = remember { MutableInteractionSource() })
+                                {vm.processIntent(CreateNotesIntents.DeleteUserNote(item))
+                                usersNoteCreated.remove(item)})
+                        }
+                    }
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 OutlinedTextField(
@@ -250,7 +271,9 @@ object CreateNotesScreen : Screen {
                     Text(text = "Отменить")
                 }
                 Button(
-                    onClick = { vm.processIntent(CreateNotesIntents.Next(scope)) },
+                    onClick = { vm.processIntent(CreateNotesIntents.Next(scope))
+                        usersNoteCreated = mutableStateListOf()
+                    },
                     modifier = Modifier
                         .clip(RoundedCornerShape(70.dp))
                         .height(40.dp)

@@ -7,9 +7,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import org.example.project.presentation.ChatsScreen
 import org.example.project.presentation.HomeScreen
-import org.example.project.presentation.ProfileScreen
+import org.example.project.presentation.profile_feature.main_feature.screen.ProfileScreen
 import org.example.project.presentation.TapeScreen
-import org.example.project.core.Navigation
+import org.example.project.core.navigation.Navigation
 import org.example.project.presentation.crm_feature.menu_feature.screen.MenuScreen
 
 class MenuBottomBarViewModel : ViewModel() {

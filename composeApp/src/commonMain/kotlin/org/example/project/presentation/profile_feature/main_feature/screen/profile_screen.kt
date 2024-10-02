@@ -1,8 +1,9 @@
-package org.example.project.presentation
+package org.example.project.presentation.profile_feature.main_feature.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,13 +32,21 @@ import cafe.adriel.voyager.core.screen.Screen
 import mainmenucomponenttsdstore.composeapp.generated.resources.Res
 import mainmenucomponenttsdstore.composeapp.generated.resources.down_arrow
 import mainmenucomponenttsdstore.composeapp.generated.resources.photo_profie
-import mainmenucomponenttsdstore.composeapp.generated.resources.user
 import org.example.project.core.menu_bottom_bar.ui.MenuBottomBar
+import org.example.project.presentation.profile_feature.main_feature.viewmodel.ProfileIntents
+import org.example.project.presentation.profile_feature.main_feature.viewmodel.ProfileViewModel
 import org.jetbrains.compose.resources.painterResource
 
 object ProfileScreen:Screen{
+
+    val vm = ProfileViewModel()
     @Composable
     override fun Content() {
+
+        val scope = rememberCoroutineScope()
+
+        vm.processIntent(ProfileIntents.SetScreen(scope))
+
         Box(modifier = Modifier.fillMaxSize().background(Color.LightGray)){
                 Box(
                     modifier = Modifier.fillMaxWidth()
@@ -83,7 +94,10 @@ object ProfileScreen:Screen{
                         }
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        Row(modifier = Modifier.fillMaxWidth(0.9f)
+                        Row(modifier = Modifier.fillMaxWidth(0.9f).clickable (
+                            indication = null, // Отключение эффекта затемнения
+                            interactionSource = remember { MutableInteractionSource() })
+                        {vm.processIntent(ProfileIntents.Warehouse) }
                             , horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
                             Text("Склад", fontSize = 15.sp)
                             Image(painter = painterResource(Res.drawable.down_arrow),contentDescription = null,

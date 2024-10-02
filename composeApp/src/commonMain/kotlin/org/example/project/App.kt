@@ -2,7 +2,7 @@ package org.example.project
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
-import org.example.project.core.Navigation
+import org.example.project.core.navigation.Navigation
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable

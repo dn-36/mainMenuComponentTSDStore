@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.example.project.core.menu_bottom_bar.ui.MenuBottomBar
-import org.example.project.core.Navigation
+import org.example.project.core.navigation.Navigation
 import org.example.project.presentation.crm_feature.menu_feature.viewmodel.MenuIntents
 import org.example.project.presentation.crm_feature.menu_feature.viewmodel.MenuViewModel
 

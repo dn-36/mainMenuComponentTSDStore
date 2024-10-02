@@ -6,7 +6,7 @@ import org.example.project.core.model.User
 
 sealed class EditNoteIntents {
     data class SetScreen(val note: NoteResponse,val coroutineScope: CoroutineScope):EditNoteIntents()
-    data class UpdateNoteBack(val note: NoteResponse, val text:String?, val coroutineScope: CoroutineScope):EditNoteIntents()
+    data class UpdateNoteBack(val note: NoteResponse, val coroutineScope: CoroutineScope):EditNoteIntents()
 
    // object Back:EditNoteIntents()
     object Cancel:EditNoteIntents()

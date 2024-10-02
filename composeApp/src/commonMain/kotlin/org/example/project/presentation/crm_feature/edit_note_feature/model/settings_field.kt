@@ -187,21 +187,6 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                             )
                         },
                         label = { Text("Название") },
-                        trailingIcon = {
-                            IconButton(
-                                onClick = {
-                                    vm.editNoteState = vm.editNoteState.copy(
-                                        expandedList = !vm.editNoteState.expandedList
-                                    )
-                                }
-                            ) {
-                                Icon(
-                                    painter = painterResource(Res.drawable.down_arrow),
-                                    contentDescription = "Поиск",
-                                    modifier = Modifier.size(20.dp)
-                                )
-                            }
-                        },
                         modifier = Modifier
                             .fillMaxWidth(0.8f)
                             .heightIn(min = 40.dp)
@@ -215,10 +200,10 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                         onClick = {
                             println("проверяем знач")
                             println("проверяем знач")
-                            println("${vm.editNoteState.statusTF}")
+                            println("${vm.editNoteState.titleTF}")
                             println("проверяем знач")
                             println("проверяем знач")
-                            vm.processIntent(EditNoteIntents.ApplyStatusUpdate(noteResponse,scope))},
+                            vm.processIntent(EditNoteIntents.ApplyNameUpdate(noteResponse,scope))},
                         modifier = Modifier
                             .clip(RoundedCornerShape(70.dp))
                             .height(40.dp)
@@ -319,6 +304,7 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                                                 interactionSource = remember { MutableInteractionSource() })
                                             {
                                                 selectedUsers.add(item)
+
                                                 vm.editNoteState = vm.editNoteState.copy(
                                                     expandedList = false,
                                                     updatedUser = selectedUsers
@@ -339,7 +325,8 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                                 modifier = Modifier.padding(8.dp).size(10.dp).align(Alignment.TopEnd).clickable(
                                         indication = null, // Отключение эффекта затемнения
                                 interactionSource = remember { MutableInteractionSource() })
-                            {vm.processIntent(EditNoteIntents.DeleteUserNote(item))})
+                            {vm.processIntent(EditNoteIntents.DeleteUserNote(item))
+                                selectedUsers.remove(item)})
                         }
                     }
                     }
@@ -358,10 +345,7 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                             .height(40.dp)
                             .fillMaxWidth(0.8f)
                     ) {
-                        Text(text = "Применить", modifier = Modifier.clickable(
-                            indication = null, // Отключение эффекта затемнения
-                            interactionSource = remember { MutableInteractionSource() })
-                        {})
+                        Text(text = "Применить")
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                 }

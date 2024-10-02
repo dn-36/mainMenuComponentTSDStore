@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.material.Text
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.sp
 import org.example.project.presentation.crm_feature.notes_feature.screen.NotesScreen
@@ -23,7 +24,7 @@ import org.example.project.presentation.crm_feature.notes_feature.viewmodel.Note
 
 object Notes{
     @Composable
-    fun Content(title:String,onClick:() -> Unit){
+    fun Content(title:String,onClick:() -> Unit,date:String){
     Box(modifier = Modifier.height(90.dp).width(180.dp)){
         Card(modifier = Modifier.clickable(
             indication = null, // Отключение эффекта затемнения
@@ -33,6 +34,7 @@ object Notes{
             backgroundColor = Color.White,
             shape = RoundedCornerShape(8.dp)) {}
         Text(title, fontSize = 15.sp, modifier = Modifier.padding(8.dp).fillMaxWidth(0.9f))
+        Text(date, fontSize = 12.sp, modifier = Modifier.padding(12.dp).align(Alignment.BottomEnd))
     }
     }
 }

@@ -8,10 +8,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-import org.example.project.core.ConstData
-import org.example.project.core.Navigation
+import org.example.project.core.data.ConstData
+import org.example.project.core.navigation.Navigation
 import org.example.project.core.model.NoteResponse
-import org.example.project.core.NotesApi
+import org.example.project.core.model.removeHtmlTags
+import org.example.project.core.notes_network.NotesApi
 import org.example.project.presentation.crm_feature.create_notes_feature.screen.CreateNotesScreen
 import org.example.project.presentation.crm_feature.edit_note_feature.screen.EditNoteScreen
 
@@ -25,21 +26,38 @@ class NotesViewModel:ViewModel() {
         }
     }
     fun createNotesIntent(){
+
         Navigation.navigator.push(CreateNotesScreen)
     }
     fun editNote(note: NoteResponse){
+
         Navigation.navigator.push(EditNoteScreen(note))
     }
     fun setNotesIntent(coroutineScope: CoroutineScope){
+
         val token = ConstData.TOKEN
+
         NotesApi.token = token
+
         val notesApi = NotesApi
+
         coroutineScope.launch(Dispatchers.IO) {
+
             val notesResponse = notesApi.getNotes()
+
+            // Проходим по каждому элементу списка и очищаем поле text от HTML-тегов
+            val cleanedNotesResponse = notesResponse.map { note ->
+                note.copy(text = note.text?.let { removeHtmlTags(it) })  // Удаляем HTML-теги из текста
+            }
+
             notesState = notesState.copy(
-                listNotes =notesResponse
+
+                listNotes = cleanedNotesResponse
+
             )
+
             println("${notesResponse}")
+
         }
 
     }

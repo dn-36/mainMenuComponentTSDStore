@@ -1,4 +1,4 @@
-package org.example.project.core
+package org.example.project.core.navigation
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.navigator.Navigator
