@@ -60,7 +60,7 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
                                 interactionSource = remember { MutableInteractionSource() })
                             {
                                 vm.processIntent(
-                                    EditNoteIntents.UpdateNote(
+                                    EditNoteIntents.UpdateNoteBack(
                                         noteResponse,
                                         vm.editNoteState.noteText,
                                     scope)
@@ -112,7 +112,7 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
             if(vm.editNoteState.expandedSettings) {
                 Box(modifier = Modifier.fillMaxWidth().padding(top = 50.dp,end = 16.dp)) {
                     Box(modifier = Modifier.align(Alignment.CenterEnd)
-                        .fillMaxWidth(0.5f).fillMaxHeight(0.2f)) {
+                        .fillMaxWidth(0.55f).fillMaxHeight(0.25f)) {
                         Card(
                             modifier = Modifier.fillMaxSize()
                                 .shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp)),
@@ -133,20 +133,7 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
                                             vm.processIntent(EditNoteIntents.SelectingEditableCategory(0))
                                         }
                                 )
-                            /*Text("смена пользователей",
-                                fontSize = 15.sp,
-                                modifier = Modifier.padding(10.dp)
-                                    .clickable(
-                                        indication = null, // Отключение эффекта затемнения
-                                        interactionSource = remember { MutableInteractionSource() })
-                                    {
-                                        vm.editNoteState = vm.editNoteState.copy(
-                                            expandedSettings = false
-                                        )
-                                        vm.processIntent(EditNoteIntents.SelectingEditableCategory(1))
-                                    }
-                            )*/
-                            Text("смена названия",
+                            Text("смена пользователей",
                                 fontSize = 15.sp,
                                 modifier = Modifier.padding(10.dp)
                                     .clickable(
@@ -159,7 +146,7 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
                                         vm.processIntent(EditNoteIntents.SelectingEditableCategory(1))
                                     }
                             )
-                            Text("удалить заметку",
+                            Text("смена названия",
                                 fontSize = 15.sp,
                                 modifier = Modifier.padding(10.dp)
                                     .clickable(
@@ -170,6 +157,19 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
                                             expandedSettings = false
                                         )
                                         vm.processIntent(EditNoteIntents.SelectingEditableCategory(2))
+                                    }
+                            )
+                            Text("удалить заметку",
+                                fontSize = 15.sp,
+                                modifier = Modifier.padding(10.dp)
+                                    .clickable(
+                                        indication = null, // Отключение эффекта затемнения
+                                        interactionSource = remember { MutableInteractionSource() })
+                                    {
+                                        vm.editNoteState = vm.editNoteState.copy(
+                                            expandedSettings = false
+                                        )
+                                        vm.processIntent(EditNoteIntents.SelectingEditableCategory(3))
                                     })
                             }
                         }
@@ -180,7 +180,7 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
                     println("проверка видимости")
                     println("проверка видимости")
                     println("проверка видимости")
-                    println("${vm.editNoteState.openWindowUpdate},${vm.editNoteState.text}")
+                    println("${vm.editNoteState.openWindowUpdate},${vm.editNoteState.statusTF}")
                     println("проверка видимости")
                     println("проверка видимости")
                     println("проверка видимости")
@@ -190,10 +190,14 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
                         }
 
                         1 -> {
-                            WindowUpdate(vm,noteResponse).Name()
+                            WindowUpdate(vm,noteResponse).Users()
                         }
 
                         2 -> {
+                            WindowUpdate(vm,noteResponse).Name()
+                        }
+
+                        3 -> {
                             WindowUpdate(vm,noteResponse).Delete()
                         }
                     }

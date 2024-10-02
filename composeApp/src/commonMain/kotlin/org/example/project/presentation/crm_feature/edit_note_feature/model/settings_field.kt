@@ -1,5 +1,6 @@
 package org.example.project.presentation.crm_feature.edit_note_feature.model
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -15,7 +16,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -36,8 +40,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mainmenucomponenttsdstore.composeapp.generated.resources.Res
+import mainmenucomponenttsdstore.composeapp.generated.resources.cancel
 import mainmenucomponenttsdstore.composeapp.generated.resources.down_arrow
 import org.example.project.core.model.NoteResponse
+import org.example.project.core.model.User
 import org.example.project.presentation.crm_feature.edit_note_feature.viewmodel.EditNoteIntents
 import org.example.project.presentation.crm_feature.edit_note_feature.viewmodel.EditNoteViewModel
 import org.jetbrains.compose.resources.painterResource
@@ -70,10 +76,10 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                     OutlinedTextField(
-                        value = vm.editNoteState.text!!,
+                        value = vm.editNoteState.statusTF!!,
                         onValueChange = {
                             vm.editNoteState = vm.editNoteState.copy(
-                                text = it
+                                statusTF = it
                             )
                         },
                         label = { Text("Статус") },
@@ -120,7 +126,7 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                                                 interactionSource = remember { MutableInteractionSource() })
                                             {
                                                 vm.editNoteState = vm.editNoteState.copy(
-                                                    text = item,
+                                                    statusTF = item,
                                                     expandedList = false
                                                 )
                                             })
@@ -133,10 +139,10 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                             onClick = {
                                 println("проверяем знач")
                                 println("проверяем знач")
-                                println("${vm.editNoteState.text}")
+                                println("${vm.editNoteState.statusTF}")
                                 println("проверяем знач")
                                 println("проверяем знач")
-                                vm.processIntent(EditNoteIntents.ApplyStatus(noteResponse,scope))},
+                                vm.processIntent(EditNoteIntents.ApplyStatusUpdate(noteResponse,scope))},
                             modifier = Modifier
                                 .clip(RoundedCornerShape(70.dp))
                                 .height(40.dp)
@@ -174,10 +180,10 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     OutlinedTextField(
-                        value = vm.editNoteState.title!!,
+                        value = vm.editNoteState.titleTF!!,
                         onValueChange = {
                             vm.editNoteState = vm.editNoteState.copy(
-                                title = it
+                                titleTF = it
                             )
                         },
                         label = { Text("Название") },
@@ -209,10 +215,10 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                         onClick = {
                             println("проверяем знач")
                             println("проверяем знач")
-                            println("${vm.editNoteState.text}")
+                            println("${vm.editNoteState.statusTF}")
                             println("проверяем знач")
                             println("проверяем знач")
-                            vm.processIntent(EditNoteIntents.ApplyStatus(noteResponse,scope))},
+                            vm.processIntent(EditNoteIntents.ApplyStatusUpdate(noteResponse,scope))},
                         modifier = Modifier
                             .clip(RoundedCornerShape(70.dp))
                             .height(40.dp)
@@ -226,14 +232,14 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
             }
         }
     }
-   /* @Composable
+    @Composable
     fun Users() {
 
         val scope = rememberCoroutineScope()
 
         println("users")
         println("users")
-        println("${vm.editNoteState.text!!}")
+        println("${vm.editNoteState.statusTF!!}")
         println("users")
         println("users")
 
@@ -257,13 +263,16 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     OutlinedTextField(
-                        value = vm.editNoteState.text!!,
-                        onValueChange = {
+                        value = vm.editNoteState.usersTF!!,
+                        onValueChange = { inputText ->
                             vm.editNoteState = vm.editNoteState.copy(
-                                text = it
+                                usersTF = inputText,
+                                filteredUsers = vm.editNoteState.listAllUsers.filter {
+                                    it.name!!.contains(inputText, ignoreCase = true)
+                                }
                             )
                         },
-                        label = { Text("Пользватели") },
+                        label = { Text("Пользователи") },
                         trailingIcon = {
                             IconButton(
                                 onClick = {
@@ -283,33 +292,34 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                             .fillMaxWidth(0.8f)
                             .heightIn(min = 40.dp)
                             .clickable(
-                                indication = null, // Отключение эффекта затемнения
+                                indication = null,
                                 interactionSource = remember { MutableInteractionSource() })
-                            { }// Стандартная высота TextField
+                            {}
                     )
                     if (vm.editNoteState.expandedList) {
                         Box(
                             modifier = Modifier.fillMaxWidth(0.8f).fillMaxHeight(0.2f)
                         ) {
                             Card(
-                                modifier = Modifier.fillMaxSize()
+                                modifier = Modifier
+                                    .fillMaxSize()
                                     .shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp)),
                                 backgroundColor = Color.White,
                                 shape = RoundedCornerShape(8.dp)
                             ) {}
                             LazyColumn {
-                                itemsIndexed(vm.editNoteState.listAllUsers) { index, item ->
+                                itemsIndexed(vm.editNoteState.filteredUsers) { index, item ->
                                     Text(item.name!!,
                                         fontSize = 15.sp,
-                                        modifier = Modifier.fillMaxWidth(0.9f).padding(16.dp)
+                                        modifier = Modifier
+                                            .fillMaxWidth(0.9f)
+                                            .padding(16.dp)
                                             .clickable(
-                                                indication = null, // Отключение эффекта затемнения
+                                                indication = null,
                                                 interactionSource = remember { MutableInteractionSource() })
                                             {
                                                 selectedUsers.add(item)
-
                                                 vm.editNoteState = vm.editNoteState.copy(
-                                                    text =  "${vm.editNoteState.text + item.name},",
                                                     expandedList = false,
                                                     updatedUser = selectedUsers
                                                 )
@@ -317,6 +327,21 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                                 }
                             }
                         }
+                    }
+                    Spacer(modifier = Modifier.height(5.dp))
+                    LazyColumn (modifier = Modifier.fillMaxWidth(0.8f)) {
+                        items(selectedUsers){item ->
+                        Box(modifier = Modifier.padding(vertical = 5.dp).clip(RoundedCornerShape(10.dp))
+                            .height(40.dp).fillMaxWidth().background(Color(0xFFA6D172))){
+                            Text(text = item.name!!,color = Color.White, fontSize = 15.sp, modifier = Modifier.padding(8.dp).align(
+                                Alignment.CenterStart))
+                            Image(painter = painterResource(Res.drawable.cancel),contentDescription = null,
+                                modifier = Modifier.padding(8.dp).size(10.dp).align(Alignment.TopEnd).clickable(
+                                        indication = null, // Отключение эффекта затемнения
+                                interactionSource = remember { MutableInteractionSource() })
+                            {vm.processIntent(EditNoteIntents.DeleteUserNote(item))})
+                        }
+                    }
                     }
                     println("333")
                     println("333")
@@ -327,7 +352,7 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
                     Button(
                         onClick = {
 
-                            vm.processIntent(EditNoteIntents.Apply(noteResponse,scope))},
+                            vm.processIntent(EditNoteIntents.ApplyUsersUpdate(noteResponse,scope))},
                         modifier = Modifier
                             .clip(RoundedCornerShape(70.dp))
                             .height(40.dp)
@@ -343,7 +368,7 @@ data class WindowUpdate(val vm: EditNoteViewModel,val noteResponse: NoteResponse
 
             }
         }
-    }*/
+    }
     @Composable
     fun Delete() {
 
