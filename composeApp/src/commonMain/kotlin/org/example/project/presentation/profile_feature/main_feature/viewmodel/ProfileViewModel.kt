@@ -9,6 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import org.example.project.core.data.ConstData
+import org.example.project.core.key_value_storage.KeyValueStorage
+import org.example.project.core.key_value_storage.keyValueStorage
 import org.example.project.core.navigation.Navigation
 import org.example.project.core.notes_network.NotesApi
 import org.example.project.core.users_network.UsersApi
@@ -38,6 +40,8 @@ class ProfileViewModel:ViewModel() {
 
     fun setScreen(coroutineScope: CoroutineScope){
 
+       val keyValueStorage:KeyValueStorage = keyValueStorage()
+
         if(profileState.isUsed.value) {
 
             profileState.isUsed.value = false
@@ -50,7 +54,13 @@ class ProfileViewModel:ViewModel() {
 
             coroutineScope.launch(Dispatchers.IO) {
 
-                println("${usersApi.getUserById("")}")
+               // println("${usersApi.getUsers()}")
+
+                keyValueStorage.saveCurrentNumber("currentNumber","+79963799050")
+
+                keyValueStorage.saveCurrentName("currentName","DIMA")
+
+                println("${keyValueStorage.getCurrentNumber("currentNumber")}")
 
             }
         }

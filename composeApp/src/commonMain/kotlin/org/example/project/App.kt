@@ -2,6 +2,7 @@ package org.example.project
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
+import org.example.project.core.key_value_storage.KeyValueStorage
 import org.example.project.core.navigation.Navigation
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -10,6 +11,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
     MaterialTheme {
         Navigation.navigator()
+
         // Получение списка заметок
 
 

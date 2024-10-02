@@ -32,6 +32,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import mainmenucomponenttsdstore.composeapp.generated.resources.Res
 import mainmenucomponenttsdstore.composeapp.generated.resources.down_arrow
 import mainmenucomponenttsdstore.composeapp.generated.resources.photo_profie
+import org.example.project.core.key_value_storage.KeyValueStorage
 import org.example.project.core.menu_bottom_bar.ui.MenuBottomBar
 import org.example.project.presentation.profile_feature.main_feature.viewmodel.ProfileIntents
 import org.example.project.presentation.profile_feature.main_feature.viewmodel.ProfileViewModel
@@ -42,6 +43,8 @@ object ProfileScreen:Screen{
     val vm = ProfileViewModel()
     @Composable
     override fun Content() {
+
+        //val keyValueStorage = getKeyValueStorage()
 
         val scope = rememberCoroutineScope()
 
