@@ -16,7 +16,7 @@ import org.example.project.core.notes_network.NotesApi
 
 object UsersApi {
 
-    var token: String = ""
+   /* var token: String = ""
 
     private val client = HttpClient(httpClientEngine) {
 
@@ -46,5 +46,5 @@ object UsersApi {
         println(" ${response}")
         println(" ////////////////////++++++++++")
         return response.body<List<User>>()
-    }
+    }*/
 }

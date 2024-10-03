@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 
 data class ProfileState(
 
-    val isUsed : MutableState<Boolean> = mutableStateOf(true)
+    val isUsed : MutableState<Boolean> = mutableStateOf(true),
+    val name : String = "",
+    val numberPhone : String = "",
 
 )

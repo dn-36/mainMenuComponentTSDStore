@@ -9,6 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import org.example.project.core.data.ConstData
+import org.example.project.core.key_value_storage.KeyValueStorage
+import org.example.project.core.key_value_storage.keyValueStorage
 import org.example.project.core.navigation.Navigation
 import org.example.project.core.model.Note
 import org.example.project.core.model.NoteResponse
@@ -27,7 +29,7 @@ class EditNoteViewModel : ViewModel() {
     fun processIntent(intent: EditNoteIntents) {
         when (intent) {
             is EditNoteIntents.SetScreen -> {
-                setScreen(intent.note,intent.coroutineScope)
+                setScreen(intent.note, intent.coroutineScope)
             }
 
             is EditNoteIntents.UpdateNoteBack -> {
@@ -35,7 +37,7 @@ class EditNoteViewModel : ViewModel() {
             }
 
             is EditNoteIntents.ApplyNameUpdate -> {
-                applyNameUpdate(intent.note,intent.coroutineScope)
+                applyNameUpdate(intent.note, intent.coroutineScope)
             }
 
             is EditNoteIntents.Cancel -> {
@@ -47,15 +49,15 @@ class EditNoteViewModel : ViewModel() {
             }
 
             is EditNoteIntents.DeleteNote -> {
-                deleteNote(intent.note,intent.coroutineScope)
+                deleteNote(intent.note, intent.coroutineScope)
             }
 
             is EditNoteIntents.ApplyStatusUpdate -> {
-                applyStatusUpdate(intent.note,intent.coroutineScope)
+                applyStatusUpdate(intent.note, intent.coroutineScope)
             }
 
             is EditNoteIntents.ApplyUsersUpdate -> {
-                applyUsersUpdate(intent.note,intent.coroutineScope)
+                applyUsersUpdate(intent.note, intent.coroutineScope)
             }
 
             is EditNoteIntents.DeleteUserNote -> {
@@ -69,7 +71,8 @@ class EditNoteViewModel : ViewModel() {
         editNoteState = editNoteState.copy(
             isUsed = mutableStateOf(true),
             openWindowUpdate = true,
-            categoryNow = index)
+            categoryNow = index
+        )
     }
 
     fun cancel() {
@@ -96,13 +99,19 @@ class EditNoteViewModel : ViewModel() {
 
         var status = 1
 
-        when(editNoteState.statusTF) {
+        when (editNoteState.statusTF) {
 
-            "Активна" -> {status = 1}
+            "Активна" -> {
+                status = 1
+            }
 
-            "Скрыта" -> {status = 0}
+            "Скрыта" -> {
+                status = 0
+            }
 
-            else -> { status = 1 }
+            else -> {
+                status = 1
+            }
 
         }
 
@@ -111,7 +120,8 @@ class EditNoteViewModel : ViewModel() {
             text = editNoteState.noteText,
             status = status,
             users = idUsers.toList(),
-            local_id = "null")
+            local_id = "null"
+        )
 
         editNoteState = editNoteState.copy(
             status = status
@@ -128,7 +138,7 @@ class EditNoteViewModel : ViewModel() {
 
             notesApi.updateNote(noteId = "${note.ui}", updatedNote = updatedNote)
 
-            if(editNoteState.status == 1) {
+            if (editNoteState.status == 1) {
 
                 val notesResponse = notesApi.getNotes()
 
@@ -148,8 +158,7 @@ class EditNoteViewModel : ViewModel() {
                     openWindowUpdate = false,
                     isUsed = mutableStateOf(true)
                 )
-            }
-            else {
+            } else {
 
                 Navigation.navigator.push(NotesScreen)
 
@@ -224,7 +233,7 @@ class EditNoteViewModel : ViewModel() {
 
         NotesApi.token = token
 
-            val idUsers = mutableListOf<Int?>()
+        val idUsers = mutableListOf<Int?>()
 
         editNoteState.updatedUser.forEach { it ->
 
@@ -253,7 +262,7 @@ class EditNoteViewModel : ViewModel() {
 
         coroutineScope.launch(Dispatchers.IO) {
 
-        notesApi.updateNote(noteId = "${note.ui}", updatedNote = updatedNote)
+            notesApi.updateNote(noteId = "${note.ui}", updatedNote = updatedNote)
 
             val notesResponse = notesApi.getNotes()
 
@@ -277,7 +286,7 @@ class EditNoteViewModel : ViewModel() {
         }
     }
 
-    fun deleteUsersNote(user: User){
+    fun deleteUsersNote(user: User) {
 
         val newList = editNoteState.updatedUser.toMutableList()
 
@@ -288,23 +297,25 @@ class EditNoteViewModel : ViewModel() {
         )
     }
 
-    fun setScreen(note: NoteResponse,coroutineScope: CoroutineScope) {
+    fun setScreen(note: NoteResponse, coroutineScope: CoroutineScope) {
 
         if (editNoteState.isUsed.value) {
 
             editNoteState.isUsed.value = false
 
+            val keyValueStorage: KeyValueStorage = keyValueStorage()
+
             val idUsers = mutableListOf<Int?>()
 
             val updatedUsers = mutableListOf<User>()
 
-                val token = ConstData.TOKEN
+            val token = ConstData.TOKEN
 
-                val notesApi = NotesApi
+            val notesApi = NotesApi
 
-            val usersApi = UsersApi
+            // val usersApi = UsersApi
 
-                NotesApi.token = token
+            NotesApi.token = token
 
             note.users.forEach { it ->
                 idUsers.add(it.id)
@@ -313,59 +324,74 @@ class EditNoteViewModel : ViewModel() {
 
             val allUsers = mutableListOf<User>()
 
+            var creator = false
+
+            var heightBox = 0.2f
+
             coroutineScope.launch(Dispatchers.IO) {
 
-                usersApi.getUsers().forEach {
+                notesApi.getUsers().forEach {
                     allUsers.add(it)
                 }
 
-            var userText = mutableStateOf<String?>("")
+                if(note.creater == 1){
 
-            val status = when (note.status) {
-                1 -> "Активна"
-                0 -> "Скрыта"
-                else -> {
-                    ""
+                creator = true
+
+                heightBox = 0.25f
+
                 }
-            }
 
-            note.users.forEach { it ->
+                var userText = mutableStateOf<String?>("")
 
-                println("${it.name}")
+                val status = when (note.status) {
+                    1 -> "Активна"
+                    0 -> "Скрыта"
+                    else -> {
+                        ""
+                    }
+                }
 
-                userText.value = "${userText.value + it.name},"
-            }
+                note.users.forEach { it ->
 
-            println("${userText.value}")
+                    println("${it.name}")
 
-            editNoteState = editNoteState.copy(
-                note = Note(
-                   // id = "note.id",
-                    name = note.name,
-                    text = note.text,
+                    userText.value = "${userText.value + it.name},"
+                }
+
+                println("${userText.value}")
+
+                editNoteState = editNoteState.copy(
+                    note = Note(
+                        // id = "note.id",
+                        name = note.name,
+                        text = note.text,
+                        status = note.status,
+                        users = idUsers.toList(),
+                        local_id = "${note.id}"
+                    ),
+                    noteText = note.text,
+                    listAllUsers = allUsers,
+                    statusTF = status,
+                    titleTF = note.name,
                     status = note.status,
-                    users = idUsers.toList(),
-                    local_id = "${note.id}"
-                ),
-                noteText = note.text,
-                listAllUsers = allUsers,
-                statusTF = status,
-                titleTF = note.name,
-                status = note.status,
-                usersTF = "",//userText.value,
-                updatedUser = updatedUsers,
-                filteredUsers = editNoteState.listAllUsers
-            )
+                    usersTF = "",//userText.value,
+                    updatedUser = updatedUsers,
+                    filteredUsers = editNoteState.listAllUsers,
+                    creator = creator,
+                    heightBox = heightBox
+                )
 
-            println("5")
-            println("5")
-            println("5")
-            println("${editNoteState.statusTF}")
-            println("5")
-            println("5")
-            println("5")
-        }
+                println("5")
+                println("5")
+                println("5")
+                println("${editNoteState.statusTF}")
+                println("5")
+                println("5")
+                println("5")
             }
+
+        }
     }
 
     fun updateNoteBack(note: NoteResponse, coroutineScope: CoroutineScope) {
@@ -403,12 +429,12 @@ class EditNoteViewModel : ViewModel() {
 
             notesApi.updateNote(noteId = "${note.ui}", updatedNote = updatedNote)
 
-                Navigation.navigator.push(NotesScreen)
+            Navigation.navigator.push(NotesScreen)
 
         }
     }
 
-    fun deleteNote(note: NoteResponse,coroutineScope: CoroutineScope) {
+    fun deleteNote(note: NoteResponse, coroutineScope: CoroutineScope) {
 
         val token = ConstData.TOKEN
 

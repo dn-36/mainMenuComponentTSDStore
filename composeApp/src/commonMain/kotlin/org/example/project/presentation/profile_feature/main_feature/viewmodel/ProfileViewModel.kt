@@ -48,19 +48,29 @@ class ProfileViewModel:ViewModel() {
 
             val token = ConstData.TOKEN
 
-            UsersApi.token = token
+            //UsersApi.token = token
 
-            val usersApi = UsersApi
+            NotesApi.token = token
+
+            val notesApi = NotesApi
+
+            //val usersApi = UsersApi
 
             coroutineScope.launch(Dispatchers.IO) {
 
-               // println("${usersApi.getUsers()}")
+                //println("${notesApi.getUsers()}")
 
                 keyValueStorage.saveCurrentNumber("currentNumber","+79963799050")
 
                 keyValueStorage.saveCurrentName("currentName","DIMA")
 
+                profileState = profileState.copy(
+                    name = keyValueStorage.getCurrentNumber("currentName")!!,
+                    numberPhone = keyValueStorage.getCurrentNumber("currentNumber")!!
+                )
+
                 println("${keyValueStorage.getCurrentNumber("currentNumber")}")
+                println("${keyValueStorage.getCurrentNumber("currentName")}")
 
             }
         }

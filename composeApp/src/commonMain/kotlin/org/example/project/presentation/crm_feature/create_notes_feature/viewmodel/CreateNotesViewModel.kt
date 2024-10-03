@@ -136,17 +136,17 @@ class CreateNotesViewModel():ViewModel() {
 
             val token = ConstData.TOKEN
 
-            //val notesApi = NotesApi
+            val notesApi = NotesApi
 
-            val usersApi = UsersApi
+           // val usersApi = UsersApi
 
             NotesApi.token = token
 
             coroutineScope.launch(Dispatchers.IO) {
 
                 createNotesState = createNotesState.copy(
-                    listAllUsers = usersApi.getUsers(),
-                    filteredUsers = usersApi.getUsers()
+                    listAllUsers = notesApi.getUsers(),
+                    filteredUsers = notesApi.getUsers()
                 )
             }
 

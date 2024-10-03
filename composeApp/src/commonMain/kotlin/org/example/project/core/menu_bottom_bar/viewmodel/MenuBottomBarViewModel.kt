@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import org.example.project.presentation.ChatsScreen
+import org.example.project.presentation.chats_feature.ChatsScreen
 import org.example.project.presentation.HomeScreen
 import org.example.project.presentation.profile_feature.main_feature.screen.ProfileScreen
 import org.example.project.presentation.TapeScreen

@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -110,7 +111,8 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
             if(vm.editNoteState.expandedSettings) {
                 Box(modifier = Modifier.fillMaxWidth().padding(top = 50.dp,end = 16.dp)) {
                     Box(modifier = Modifier.align(Alignment.CenterEnd)
-                        .fillMaxWidth(0.55f).fillMaxHeight(0.25f)) {
+                       .fillMaxWidth(0.55f).fillMaxHeight(vm.editNoteState.heightBox)
+                    ) {
                         Card(
                             modifier = Modifier.fillMaxSize()
                                 .shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp)),
@@ -131,19 +133,25 @@ data class EditNoteScreen(val noteResponse: NoteResponse) : Screen {
                                             vm.processIntent(EditNoteIntents.SelectingEditableCategory(0))
                                         }
                                 )
-                            Text("смена пользователей",
-                                fontSize = 15.sp,
-                                modifier = Modifier.padding(10.dp)
-                                    .clickable(
-                                        indication = null, // Отключение эффекта затемнения
-                                        interactionSource = remember { MutableInteractionSource() })
-                                    {
-                                        vm.editNoteState = vm.editNoteState.copy(
-                                            expandedSettings = false
-                                        )
-                                        vm.processIntent(EditNoteIntents.SelectingEditableCategory(1))
-                                    }
-                            )
+                            if(vm.editNoteState.creator) {
+                                Text("смена пользователей",
+                                    fontSize = 15.sp,
+                                    modifier = Modifier.padding(10.dp)
+                                        .clickable(
+                                            indication = null, // Отключение эффекта затемнения
+                                            interactionSource = remember { MutableInteractionSource() })
+                                        {
+                                            vm.editNoteState = vm.editNoteState.copy(
+                                                expandedSettings = false
+                                            )
+                                            vm.processIntent(
+                                                EditNoteIntents.SelectingEditableCategory(
+                                                    1
+                                                )
+                                            )
+                                        }
+                                )
+                            }
                             Text("смена названия",
                                 fontSize = 15.sp,
                                 modifier = Modifier.padding(10.dp)

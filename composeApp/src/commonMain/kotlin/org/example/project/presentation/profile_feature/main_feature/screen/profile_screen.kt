@@ -44,8 +44,6 @@ object ProfileScreen:Screen{
     @Composable
     override fun Content() {
 
-        //val keyValueStorage = getKeyValueStorage()
-
         val scope = rememberCoroutineScope()
 
         vm.processIntent(ProfileIntents.SetScreen(scope))
@@ -66,18 +64,18 @@ object ProfileScreen:Screen{
 
                         Column(horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier.fillMaxWidth()) {
-                            Text("Name", fontSize = 20.sp)
+                            Text(vm.profileState.name, fontSize = 20.sp)
 
                             Spacer(modifier = Modifier.height(8.dp))
 
-                            Text("+8999999999", fontSize = 15.sp, color = Color.LightGray)
+                            Text(vm.profileState.numberPhone, fontSize = 15.sp, color = Color.LightGray)
 
-                            Spacer(modifier = Modifier.height(8.dp))
+                            Spacer(modifier = Modifier.height(15.dp))
 
                             Image(
                                 painter = painterResource(Res.drawable.photo_profie),
                                 contentDescription = null,
-                                modifier = Modifier.size(130.dp)
+                                modifier = Modifier.size(150.dp)
                             )
                         }
                     }

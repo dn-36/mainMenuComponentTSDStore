@@ -57,6 +57,18 @@ object NotesApi {
         return response.body<List<NoteResponse>>()
     }
 
+    //получение всех пользователей
+    suspend fun getUsers(): List<User> {
+
+        val response = client.get("https://delta.online/api/users-company") {
+
+        }
+        println(" ////////////////////++++++++++")
+        println(" ${response}")
+        println(" ////////////////////++++++++++")
+        return response.body<List<User>>()
+    }
+
     // Добавление новой заметки
     suspend fun createNote(note: Note): HttpResponse {
         return try {
