@@ -1,11 +1,15 @@
 package org.example.project.presentation.chats_feature.model
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,9 +28,26 @@ object ChatsItem{
             Row(modifier = Modifier.fillMaxWidth()){
                 Image(painter = painterResource(Res.drawable.chats_ava),contentDescription = null,
                     modifier = Modifier.size(50.dp))
-                Column(){
+                Column(modifier = Modifier.fillMaxHeight(0.1f),
+                    verticalArrangement = Arrangement.SpaceBetween){
                  Text(text = "Название чата", fontSize = 20.sp)
-                 Text(text = "последнее сообщение", fontSize = 13.sp, color = Color(0x00707575))
+                    Column() {
+                        Row() {
+                            Text(
+                                text = "последнее сообщение",
+                                fontSize = 13.sp,
+                                color = Color(0x00707575)
+                            )
+                            Text(
+                                text = "13:50",
+                                fontSize = 13.sp,
+                                color = Color(0x00707575)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Box(modifier = Modifier.fillMaxHeight(0.9f).height(2.dp)
+                            .background(Color(0x00707575)))
+                    }
                 }
             }
         }
