@@ -29,4 +29,9 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
+include(":features")
+include(":common")
+include(":features:application-sections")
+include(":features:application-sections:crm")
+include(":features:application-sections:crm:menu")
 include(":core")

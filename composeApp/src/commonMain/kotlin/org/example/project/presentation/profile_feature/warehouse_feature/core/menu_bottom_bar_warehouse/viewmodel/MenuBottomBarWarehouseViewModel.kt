@@ -1,14 +1,13 @@
-package org.example.project.presentation.profile_feature.core.menu_bottom_bar_profile.viewmodel
+package org.example.project.presentation.profile_feature.warehouse_feature.core.menu_bottom_bar_warehouse.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import org.example.project.presentation.HomeScreen
-import org.example.project.presentation.TapeScreen
-import org.example.project.core.navigation.Navigation
-import org.example.project.presentation.crm_feature.menu_feature.screen.MenuScreen
+import org.example.project.Navigation
+import org.example.project.presentation.profile_feature.core.menu_bottom_bar_profile.viewmodel.MenuBottomBarWarehouseIntents
+import org.example.project.presentation.profile_feature.core.menu_bottom_bar_profile.viewmodel.MenuBottomBarWarehouseState
 import org.example.project.presentation.profile_feature.main_feature.screen.ProfileScreen
 import org.example.project.presentation.profile_feature.warehouse_feature.finance_feature.screen.FinanceScreen
 import org.example.project.presentation.profile_feature.warehouse_feature.main_feature.screen.WarehouseScreen

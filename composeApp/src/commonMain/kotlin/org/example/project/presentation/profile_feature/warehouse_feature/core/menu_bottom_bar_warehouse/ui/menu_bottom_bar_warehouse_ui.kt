@@ -28,7 +28,7 @@ import mainmenucomponenttsdstore.composeapp.generated.resources.printing
 import mainmenucomponenttsdstore.composeapp.generated.resources.user
 import mainmenucomponenttsdstore.composeapp.generated.resources.warehouse
 import org.example.project.presentation.profile_feature.core.menu_bottom_bar_profile.viewmodel.MenuBottomBarWarehouseIntents
-import org.example.project.presentation.profile_feature.core.menu_bottom_bar_profile.viewmodel.MenuBottomBarWarehouseViewModel
+import org.example.project.presentation.profile_feature.warehouse_feature.core.menu_bottom_bar_warehouse.viewmodel.MenuBottomBarWarehouseViewModel
 
 
 import org.jetbrains.compose.resources.painterResource

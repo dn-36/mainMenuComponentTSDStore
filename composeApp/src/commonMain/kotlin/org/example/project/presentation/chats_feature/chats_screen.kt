@@ -4,13 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,14 +20,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import com.project.core.menu_bottom_bar.ui.MenuBottomBar
 import mainmenucomponenttsdstore.composeapp.generated.resources.Res
 import mainmenucomponenttsdstore.composeapp.generated.resources.plus
-import org.example.project.core.menu_bottom_bar.ui.MenuBottomBar
 import org.example.project.presentation.chats_feature.model.ChatsItem
-import org.example.project.presentation.crm_feature.notes_feature.model.Notes
-import org.example.project.presentation.crm_feature.notes_feature.screen.NotesScreen
-import org.example.project.presentation.crm_feature.notes_feature.util.formatDateTime
-import org.example.project.presentation.crm_feature.notes_feature.viewmodel.NotesIntents
 import org.jetbrains.compose.resources.painterResource
 
 object ChatsScreen: Screen {

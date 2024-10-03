@@ -28,26 +28,26 @@ object ChatsItem{
             Row(modifier = Modifier.fillMaxWidth()){
                 Image(painter = painterResource(Res.drawable.location),contentDescription = null,
                     modifier = Modifier.size(50.dp))
-                Column(modifier = Modifier.fillMaxHeight(0.1f),
+                Column(modifier = Modifier.fillMaxHeight(0.2f),
                     verticalArrangement = Arrangement.SpaceBetween){
-                 Text(text = "Название чата", fontSize = 20.sp)
-                    Column() {
+                 Text(text = "Название чата", fontSize = 17.sp)
                         Row() {
                             Text(
                                 text = "последнее сообщение",
                                 fontSize = 13.sp,
-                                color = Color(0x00707575)
+                                color = Color.Black
                             )
                             Text(
                                 text = "13:50",
                                 fontSize = 13.sp,
-                                color = Color(0x00707575)
+                                color = Color.Black
                             )
                         }
                         Spacer(modifier = Modifier.height(5.dp))
-                        Box(modifier = Modifier.fillMaxHeight(0.9f).height(2.dp)
-                            .background(Color(0x00707575)))
-                    }
+
+                        Box(modifier = Modifier.fillMaxWidth(0.9f).height(1.dp)
+                            .background(Color.Black))
+
                 }
             }
         }

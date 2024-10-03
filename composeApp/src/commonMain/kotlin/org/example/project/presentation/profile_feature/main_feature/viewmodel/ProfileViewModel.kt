@@ -4,18 +4,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.project.core.ConstData
+import com.project.core.key_value_storage.KeyValueStorage
+import com.project.core.notes_network.NotesApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-import org.example.project.core.data.ConstData
-import org.example.project.core.key_value_storage.KeyValueStorage
-import org.example.project.core.key_value_storage.keyValueStorage
-import org.example.project.core.navigation.Navigation
-import org.example.project.core.notes_network.NotesApi
-import org.example.project.core.users_network.UsersApi
-import org.example.project.presentation.crm_feature.edit_note_feature.screen.EditNoteScreen
+import org.example.project.Navigation
 import org.example.project.presentation.profile_feature.warehouse_feature.main_feature.screen.WarehouseScreen
+import org.koin.mp.KoinPlatform.getKoin
 
 class ProfileViewModel:ViewModel() {
 
@@ -40,7 +38,7 @@ class ProfileViewModel:ViewModel() {
 
     fun setScreen(coroutineScope: CoroutineScope){
 
-       val keyValueStorage:KeyValueStorage = keyValueStorage()
+       val keyValueStorage: KeyValueStorage = getKoin().get()
 
         if(profileState.isUsed.value) {
 
@@ -48,13 +46,7 @@ class ProfileViewModel:ViewModel() {
 
             val token = ConstData.TOKEN
 
-            //UsersApi.token = token
-
             NotesApi.token = token
-
-            val notesApi = NotesApi
-
-            //val usersApi = UsersApi
 
             coroutineScope.launch(Dispatchers.IO) {
 
