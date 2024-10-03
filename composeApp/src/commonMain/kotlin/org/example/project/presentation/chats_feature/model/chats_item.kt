@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mainmenucomponenttsdstore.composeapp.generated.resources.Res
-import mainmenucomponenttsdstore.composeapp.generated.resources.chats_ava
+import mainmenucomponenttsdstore.composeapp.generated.resources.location
 import org.jetbrains.compose.resources.painterResource
 
 object ChatsItem{
@@ -26,7 +26,7 @@ object ChatsItem{
     fun Content(){
         Box(modifier = Modifier.fillMaxWidth(0.95f)){
             Row(modifier = Modifier.fillMaxWidth()){
-                Image(painter = painterResource(Res.drawable.chats_ava),contentDescription = null,
+                Image(painter = painterResource(Res.drawable.location),contentDescription = null,
                     modifier = Modifier.size(50.dp))
                 Column(modifier = Modifier.fillMaxHeight(0.1f),
                     verticalArrangement = Arrangement.SpaceBetween){
