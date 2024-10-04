@@ -5,8 +5,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import cafe.adriel.voyager.core.screen.Screen
+import com.project.core.Navigation
 
-class MenuBottomBarViewModel : ViewModel() {
+class MenuBottomBarViewModel(
+    private val homeScreen: Screen,
+    private val crmScreen: Screen,
+    private val tapeScreen: Screen,
+    private val chatsScreen: Screen,
+    private val profileScreen: Screen
+) : ViewModel() {
 
     var menuBottomBarState by mutableStateOf(MenuBottomBarState())
 
@@ -16,7 +24,7 @@ class MenuBottomBarViewModel : ViewModel() {
             is MenuBottomBarIntents.Profile -> {profile()}
             is MenuBottomBarIntents.Chats -> {chats()}
             is MenuBottomBarIntents.Tape -> {tape()}
-            is MenuBottomBarIntents.Organizations -> {organizations()}
+            is MenuBottomBarIntents.Home -> {home()}
         }
     }
     fun crm() {
@@ -30,7 +38,7 @@ class MenuBottomBarViewModel : ViewModel() {
         menuBottomBarState = menuBottomBarState.copy(
             colorListBottomMenu = newList
         )
-      //  Navigation.navigator.push(MenuScreen)
+        Navigation.navigator.push(crmScreen)
 
     }
 
@@ -45,11 +53,11 @@ class MenuBottomBarViewModel : ViewModel() {
         menuBottomBarState = menuBottomBarState.copy(
             colorListBottomMenu = newList
         )
-       // Navigation.navigator.push(ProfileScreen)
+        Navigation.navigator.push(profileScreen)
 
     }
 
-    fun organizations() {
+    fun home() {
         val newList = mutableListOf(
             Color(0xFFFF9800),
             Color.Transparent,
@@ -60,7 +68,7 @@ class MenuBottomBarViewModel : ViewModel() {
         menuBottomBarState = menuBottomBarState.copy(
             colorListBottomMenu = newList
         )
-       // Navigation.navigator.push(HomeScreen)
+       Navigation.navigator.push(homeScreen)
 
     }
 
@@ -75,7 +83,7 @@ class MenuBottomBarViewModel : ViewModel() {
         menuBottomBarState = menuBottomBarState.copy(
             colorListBottomMenu = newList
         )
-      //  Navigation.navigator.push(ChatsScreen)
+        Navigation.navigator.push(chatsScreen)
 
     }
 
@@ -90,7 +98,7 @@ class MenuBottomBarViewModel : ViewModel() {
         menuBottomBarState = menuBottomBarState.copy(
             colorListBottomMenu = newList
         )
-        //Navigation.navigator.push(TapeScreen)
+        Navigation.navigator.push(tapeScreen)
 
     }
 }
