@@ -17,9 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import mainmenucomponenttsdstore.features.application_sections.chat.chats.generated.resources.Res
-import mainmenucomponenttsdstore.features.application_sections.chat.chats.generated.resources.location
 import org.jetbrains.compose.resources.painterResource
+import project.core.resources.Res
+import project.core.resources.location
 
 object ChatsItem{
     @Composable

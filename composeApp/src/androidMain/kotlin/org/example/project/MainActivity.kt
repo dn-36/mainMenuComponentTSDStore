@@ -6,16 +6,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.project.core.coreModule
+import com.project.chats.ChatScreensApi
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.dsl.KoinAppDeclaration
+import org.koin.mp.KoinPlatform.getKoin
 
 class MainActivity : ComponentActivity() {
 
     companion object{
         lateinit var context: MainActivity
     }
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -23,8 +27,14 @@ class MainActivity : ComponentActivity() {
         initKoin {
             androidContext(this@MainActivity.applicationContext)
         }
+
+
+       /*initKoin {
+            androidContext(this@MainActivity.applicationContext)
+        }*/
         setContent {
             App()
+          //  chatScreen.ChatsScreen().Content()
         }
     }
 }
@@ -35,11 +45,3 @@ fun AppAndroidPreview() {
     App()
 }
 
-fun initKoin(config: KoinAppDeclaration? = null) {
-    startKoin {
-        config?.invoke(this)
-        modules(
-            coreModule
-        )
-    }
-}

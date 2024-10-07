@@ -34,34 +34,37 @@ include(":features:crm")
 include(":features:home")
 include(":features:profile")
 include(":features:tape")
-include(":core")
+include(":core:local-storage")
+include(":core:network")
+include(":core:app")
+include(":core:navigation")
+/*--*/include(":features:application-sections:crm-section:notes-features")
+
 include(":common")
+include(":core:recources")
+
 
 /**application-sections**/
 include(":features:application-sections")
 /**chat-section**/
 /*--*/include(":features:application-sections:chat-section")
 /*--*/include(":features:application-sections:chat-section:chats-api")
+/*--*/include(":features:application-sections:chat-section:chats-impl")
+
 /**crm-section**/
 /*--*/include(":features:application-sections:crm-section")
 
-/** features**/
-/*----*/include(":features:application-sections:crm-section:create-notes-feature")
-/** api and impl**/
-/*------*/include(":features:application-sections:crm-section:create-notes-feature:create-notes-impl")
-/*------*/include(":features:application-sections:crm-section:create-notes-feature:create-notes-api")
-
 /**features**/
-/*----*/include(":features:application-sections:crm-section:edit-note-feature")
+/*----*/include(":features:application-sections:crm-section:munu-crm-feature")
 /** api and impl**/
-/*------*/include(":features:application-sections:crm-section:edit-note-feature:edit-note-impl")
-/*------*/include(":features:application-sections:crm-section:edit-note-feature:edit-note-api")
+/*------*/include(":features:application-sections:crm-section:munu-crm-feature:menu-crm-api")
+/*------*/include(":features:application-sections:crm-section:munu-crm-feature:menu-crm-impl")
 
 /**features**/
 /*----*/include(":features:application-sections:crm-section:notes-feature")
 /** api and impl**/
-/*------*/include(":features:application-sections:crm-section:notes-feature:notes-impl")
-/*------*/include(":features:application-sections:crm-section:notes-feature:notes-api")
+/*------*/include(":features:application-sections:crm-section:notes-feature:notes-screens:notes-screens-api")
+/*------*/include(":features:application-sections:crm-section:notes-feature:notes-screens:notes-screens-impl")
 
 /**features**/
 /*----*/include(":features:application-sections:crm-section:munu-feature")
@@ -76,12 +79,25 @@ include(":features:application-sections")
 /*------*/include(":features:application-sections:crm-section:project-conterol-feature:project_control-impl")
 /*------*/include(":features:application-sections:crm-section:project-conterol-feature:project-control-api")
 
-/**chat**/
+/**home-section**/
+/*--*/include(":features:application-sections:organization-section")
+/** api and impl **/
+/*----*/include(":features:application-sections:organization-section:organization-impl")
+/*----*/include(":features:application-sections:organization-section:organization-api")
 
-/*--*/include(":features:application-sections:home-section")
+/**profile-section**/
+/*--*/include(":features:application-sections:profile-section")
+/** api and impl **/
+/*----*/include(":features:application-sections:profile-section:profile-impl")
+/*----*/include(":features:application-sections:profile-section:profile-api")
+
+/**profile-section**/
 /*--*/include(":features:application-sections:tape-section")
-/*--*/include(":")
+/** api and impl **/
+/*----*/include(":features:application-sections:tape-section:tape-api")
+/*----*/include(":features:application-sections:tape-section:tape-impl")
 
 
-include(":features:navigation")
-include(":features:application-sections:home-section:home-impl")
+include(":features:application-sections:tape-section:tape-api")
+
+

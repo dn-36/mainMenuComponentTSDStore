@@ -2,31 +2,15 @@ package org.example.project
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import com.project.menu.screen.OrganizationScreenApi
+import com.project.navigation.Navigation
+import org.koin.mp.KoinPlatform.getKoin
 
 @Composable
-@Preview
 fun App() {
+    val homeSreen: OrganizationScreenApi = getKoin().get()
     MaterialTheme {
-        Navigation.navigator()
-
-        // Получение списка заметок
-
-
-        /*var showContent by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
-            }
-        }*/
+        Navigation.navigator(homeSreen.organization())
     }
 }
-//1.не использовать
 

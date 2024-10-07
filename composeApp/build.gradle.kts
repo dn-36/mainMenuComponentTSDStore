@@ -41,7 +41,17 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
-            implementation(project(":core"))
+            implementation(project(":core:navigation"))
+            implementation(project(":core:local-storage"))
+            implementation(project(":features:application-sections:chat-section:chats-api"))
+            implementation(project(":features:application-sections:chat-section:chats-impl"))
+            implementation(project(":features:application-sections:organization-section:organization-api"))
+            implementation(project(":features:application-sections:organization-section:organization-impl"))
+            implementation(project(":features:application-sections:crm-section:munu-crm-feature:menu-crm-impl"))
+            implementation(project(":features:application-sections:crm-section:munu-crm-feature:menu-crm-api"))
+            implementation(project(":features:application-sections:tape-section:tape-impl"))
+            implementation(project(":features:application-sections:profile-section:profile-api"))
+            implementation(project(":features:application-sections:profile-section:profile-impl"))
 
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -51,13 +61,9 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
-           // implementation(libs.koin.core)
             implementation(libs.cafe.adriel.voyager.voyager.navigator)
             implementation(libs.cafe.adriel.voyager.voyager.transitions)
-
             implementation(libs.bundles.ktor)
-
-
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
             api(libs.koin.core)
         }

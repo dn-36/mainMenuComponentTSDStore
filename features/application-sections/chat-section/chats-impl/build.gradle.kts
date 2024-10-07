@@ -28,7 +28,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":core"))
+            implementation(project(":core:network"))
+            implementation(project(":features:application-sections:chat-section:chats-api"))
+            implementation(project(":core:recources"))
+            implementation(project(":core:app"))
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -37,7 +40,9 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+
             // implementation(libs.koin.core)
+            api(libs.koin.core)
             implementation(libs.cafe.adriel.voyager.voyager.navigator)
             implementation(libs.cafe.adriel.voyager.voyager.transitions)        }
 
@@ -51,3 +56,4 @@ android {
         minSdk = 24
     }
 }
+
