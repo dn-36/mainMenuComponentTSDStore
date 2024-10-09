@@ -1,12 +1,8 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kotlin.serialization)
+
 }
-
-
 
 kotlin {
     androidTarget {
@@ -16,8 +12,6 @@ kotlin {
             }
         }
     }
-
-
     
     listOf(
         iosX64(),
@@ -31,31 +25,16 @@ kotlin {
     }
 
     sourceSets {
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.koin.android)
-            implementation(libs.koin.androidx.compose)
-            implementation(libs.ktor.client.okhttp)
-        }
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtime.compose)
-            // implementation(libs.koin.core)
-            implementation(libs.cafe.adriel.voyager.voyager.navigator)
-            implementation(libs.cafe.adriel.voyager.voyager.transitions)
-            implementation(libs.bundles.ktor)
             implementation(libs.koin.core)
+            implementation(libs.bundles.ktor)
+
+        }
+        androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
         }
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)
-
         }
     }
 }
@@ -66,8 +45,4 @@ android {
     defaultConfig {
         minSdk = 24
     }
-    dependencies {
-        implementation(libs.koin.android)
-    }
 }
-

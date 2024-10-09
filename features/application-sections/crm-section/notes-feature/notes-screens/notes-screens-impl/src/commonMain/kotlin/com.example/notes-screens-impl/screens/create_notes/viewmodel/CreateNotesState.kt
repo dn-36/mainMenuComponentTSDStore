@@ -2,7 +2,7 @@ package com.example.`notes-screens-impl`.screens.create_notes.viewmodel
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.project.core.model.User
+import com.project.network.notes_network.model.User
 
 data class CreateNotesState(
     val name:String = "",

@@ -1,9 +1,7 @@
 package com.project.`menu-crm-api`.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.project.core.Navigation
 import org.example.project.presentation.menu_feature.viewmodel.MenuIntents
-import org.koin.mp.KoinPlatform.getKoin
 
 class MenuViewModel:ViewModel() {
    // private val noteScreen: = getKoin().get()

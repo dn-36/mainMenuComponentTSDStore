@@ -39,8 +39,11 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
+            implementation(project(":features:outhorization-feature:outhorization-screen-api"))
             implementation(project(":core:recources"))
-           // implementation(project(":features:application-sections:home-section:home-api"))
+            implementation(project(":core:local-storage"))
+
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -49,7 +52,6 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
-            // implementation(libs.koin.core)
             implementation(libs.cafe.adriel.voyager.voyager.navigator)
             implementation(libs.cafe.adriel.voyager.voyager.transitions)
             implementation(libs.bundles.ktor)

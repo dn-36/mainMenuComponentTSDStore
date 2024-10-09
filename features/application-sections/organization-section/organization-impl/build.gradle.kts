@@ -34,7 +34,7 @@ kotlin {
             implementation(project(":features:application-sections:chat-section:chats-api"))
             implementation(project(":features:application-sections:crm-section:munu-crm-feature:menu-crm-api"))
             implementation(project(":features:application-sections:tape-section:tape-api"))
-            implementation(project(":features:application-sections:profile-section:profile-api"))
+            implementation(project(":features:application-sections:profile-section:profile-feature:profile-api"))
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)

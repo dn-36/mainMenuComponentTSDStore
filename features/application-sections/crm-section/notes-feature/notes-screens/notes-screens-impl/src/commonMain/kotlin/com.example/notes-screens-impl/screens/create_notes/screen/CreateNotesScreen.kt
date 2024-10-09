@@ -39,7 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.sp
-import com.project.core.model.User
+import com.project.network.notes_network.model.User
 import org.example.project.presentation.crm_feature.create_notes_screen.viewmodel.CreateNotesIntents
 import org.example.project.presentation.crm_feature.create_notes_screen.viewmodel.CreateNotesViewModel
 import project.core.resources.Res

@@ -18,7 +18,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.project.menu.screen.OrganizationScreenApi
 import com.project.chats.ChatScreensApi
 import com.project.chats.ProfileScreensApi
-import com.project.core.Navigation
+import com.project.network.Navigation
 import com.project.core_app.menu_bottom_bar.ui.MenuBottomBar
 import com.project.`menu-crm-api`.MenuCrmScreenApi
 import com.project.menu.screen.TapeScreenApi

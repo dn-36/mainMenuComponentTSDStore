@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import cafe.adriel.voyager.core.screen.Screen
-import com.project.core.Navigation
+import com.project.network.Navigation
 import org.example.project.core.menu_bottom_bar.viewmodel.MenuBottomBarState
 
 

@@ -1,16 +1,12 @@
 package org.example.project
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.project.chats.ChatScreensApi
+import org.example.project.app.ui.App
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.GlobalContext.startKoin
-import org.koin.dsl.KoinAppDeclaration
-import org.koin.mp.KoinPlatform.getKoin
 
 class MainActivity : ComponentActivity() {
 
@@ -33,7 +29,7 @@ class MainActivity : ComponentActivity() {
             androidContext(this@MainActivity.applicationContext)
         }*/
         setContent {
-            App()
+            App.Content()
           //  chatScreen.ChatsScreen().Content()
         }
     }
@@ -42,6 +38,6 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun AppAndroidPreview() {
-    App()
+    App.Content()
 }
 

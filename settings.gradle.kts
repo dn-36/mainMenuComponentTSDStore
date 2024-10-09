@@ -37,11 +37,14 @@ include(":features:tape")
 include(":core:local-storage")
 include(":core:network")
 include(":core:app")
-include(":core:navigation")
 /*--*/include(":features:application-sections:crm-section:notes-features")
+
 
 include(":common")
 include(":core:recources")
+include(":common:phone")
+include(":common:printer-barcode-vkp")
+include(":common:printer-barcode-tsc")
 
 
 /**application-sections**/
@@ -50,10 +53,8 @@ include(":features:application-sections")
 /*--*/include(":features:application-sections:chat-section")
 /*--*/include(":features:application-sections:chat-section:chats-api")
 /*--*/include(":features:application-sections:chat-section:chats-impl")
-
 /**crm-section**/
 /*--*/include(":features:application-sections:crm-section")
-
 /**features**/
 /*----*/include(":features:application-sections:crm-section:munu-crm-feature")
 /** api and impl**/
@@ -71,8 +72,6 @@ include(":features:application-sections")
 /** api and impl**/
 /*------*/include(":features:application-sections:crm-section:munu-feature:munu-api")
 /*------*/include(":features:application-sections:crm-section:munu-feature:menu-impl")
-
-
 /**features**/
 /*----*/include(":features:application-sections:crm-section:project-conterol-feature")
 /** api and impl **/
@@ -87,9 +86,16 @@ include(":features:application-sections")
 
 /**profile-section**/
 /*--*/include(":features:application-sections:profile-section")
+/**profile-feature**/
+/*--*/include(":features:application-sections:profile-section:profile-feature")
 /** api and impl **/
-/*----*/include(":features:application-sections:profile-section:profile-impl")
-/*----*/include(":features:application-sections:profile-section:profile-api")
+/*----*/include(":features:application-sections:profile-section:profile-feature:profile-impl")
+/*----*/include(":features:application-sections:profile-section:profile-feature:profile-api")
+/**printer-feature**/
+/*--*/include(":features:application-sections:profile-section:printer-feature")
+/** api and impl **/
+/*----*/include(":features:application-sections:profile-section:profile-feature:printer-impl")
+/*----*/include(":features:application-sections:profile-section:profile-feature:printer-api")
 
 /**profile-section**/
 /*--*/include(":features:application-sections:tape-section")
@@ -97,7 +103,9 @@ include(":features:application-sections")
 /*----*/include(":features:application-sections:tape-section:tape-api")
 /*----*/include(":features:application-sections:tape-section:tape-impl")
 
-
+/**outhorization-feature**/
+/*--*/include(":features:outhorization-feature:outhorization-feature")
+/** api and impl **/
+/*----*/include(":features:outhorization-feature:outhorization-screen-api")
+/*----*/include(":features:outhorization-feature:outhorization-screen-impl")
 include(":features:application-sections:tape-section:tape-api")
-
-

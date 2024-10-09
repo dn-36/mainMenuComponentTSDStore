@@ -30,7 +30,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
-import com.project.core.model.NoteResponse
+import com.project.network.notes_network.model.NoteResponse
 import org.example.project.presentation.crm_feature.edit_note_screen.model.WindowUpdate
 import org.example.project.presentation.crm_feature.edit_note_screen.viewmodel.EditNoteIntents
 import org.example.project.presentation.crm_feature.edit_note_screen.viewmodel.EditNoteViewModel

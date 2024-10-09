@@ -41,8 +41,10 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
-            implementation(project(":core:navigation"))
+            implementation(project(":core:app"))
             implementation(project(":core:local-storage"))
+            implementation(project(":features:outhorization-feature:outhorization-screen-api"))
+            implementation(project(":features:application-sections:organization-section:organization-api"))
             implementation(project(":features:application-sections:chat-section:chats-api"))
             implementation(project(":features:application-sections:chat-section:chats-impl"))
             implementation(project(":features:application-sections:organization-section:organization-api"))
@@ -50,9 +52,11 @@ kotlin {
             implementation(project(":features:application-sections:crm-section:munu-crm-feature:menu-crm-impl"))
             implementation(project(":features:application-sections:crm-section:munu-crm-feature:menu-crm-api"))
             implementation(project(":features:application-sections:tape-section:tape-impl"))
-            implementation(project(":features:application-sections:profile-section:profile-api"))
-            implementation(project(":features:application-sections:profile-section:profile-impl"))
-
+            implementation(project(":features:application-sections:profile-section:profile-feature:profile-api"))
+            implementation(project(":features:application-sections:profile-section:profile-feature:profile-impl"))
+            implementation(project(":features:outhorization-feature:outhorization-screen-impl"))
+            implementation(project(":core:network"))
+            api(libs.koin.core)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -64,8 +68,7 @@ kotlin {
             implementation(libs.cafe.adriel.voyager.voyager.navigator)
             implementation(libs.cafe.adriel.voyager.voyager.transitions)
             implementation(libs.bundles.ktor)
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-            api(libs.koin.core)
+            implementation(libs.kotlinx.datetime)
         }
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)
